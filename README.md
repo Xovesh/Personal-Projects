@@ -5,7 +5,7 @@ This is an interactive GUI Pokedex that uses all my actuals knowlegde about pyth
 You need to have installed BeautifulSoup4
 
 All you need to get it worked is to download the next files:
-  - ____init.py__
+  - __init.py__
   - __DownloadInfo.py__
   - __Pokedex.py__
   - __Pokemon.py__
