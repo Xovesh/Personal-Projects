@@ -14,4 +14,4 @@ The folders Pokemoninfo and Pokemonpictures are not necessary. You can download 
 
 To run up the program run __init.py__ file, everything needed is going to be downloaded.
 
-__NOTE__: You need an internet connection to automatically download files
+__NOTE__: You need an internet connection to automatically download files, everything downloads. Last time tried: 31/05/2018
