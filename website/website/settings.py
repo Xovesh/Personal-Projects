@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'u7o8uh*#*e_)zioou=!i(4^r0z2*ngk8pl+98%)&4!+o1c(1sp'
+SECRET_KEY = '++dpv(c_%1quvfji@x5vvuk-awd-9#7$^5mm9@xc2&35g#ib!i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'pokedex.apps.PokedexConfig',
+    "myfirstapp",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

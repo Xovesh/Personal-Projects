@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myfirstapp/css/style.css' %}" type="text/css">
+    <title>Pokedex</title>
+</head>
+<body>
+    <div class="container">
+        <nav>
+         <ul>
+             <li><a href="http://127.0.0.1:8000">Index</a></li>
+             <li class="currentli"><a href="http://127.0.0.1:8000/myfirstapp">Pokedex</a></li>
+             <li><a href="#">Evolutions</a></li>
+             <li><a href="http://127.0.0.1:8000/admin/">Admin</a></li>
+         </ul>
+        </nav>
+        <div>
+            <table>
+                 <tr>
+                     <th>Number</th>
+                     <th>Image</th>
+                     <th>Name</th>
+                     <th>Type</th>
+                     <th>Hp</th>
+                     <th>Attack</th>
+                     <th>Defense</th>
+                     <th>Special attack</th>
+                     <th>Special defense</th>
+                     <th>Speed</th>
+                 </tr>
+                {% for pokemon in all_pokemons %}
+                <tr>
+                    <td>{{pokemon.number}}</td>
+                    {% load static %}
+                    <td><img src="{% static 'myfirstapp/pokemonpictures/'%}{{pokemon.number}}.png"width="50" height="50"> </img> </td>
+                    <td><a href="{{pokemon.name}}">{{pokemon.name}}</a></td>
+                    <td>{{pokemon.ptype}}</td>
+                    <td>{{pokemon.hp}}</td>
+                    <td>{{pokemon.attack}}</td>
+                    <td>{{pokemon.defense}}</td>
+                    <td>{{pokemon.special_attack}}</td>
+                    <td>{{pokemon.special_defense}}</td>
+                    <td>{{pokemon.speed}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

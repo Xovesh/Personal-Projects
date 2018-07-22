@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokemon</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myfirstapp/css/style.css' %}" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+         <ul>
+             <li><a href="http://127.0.0.1:8000">Index</a></li>
+             <li><a href="http://127.0.0.1:8000/myfirstapp">Pokedex</a></li>
+             <li><a href="#">Evolutions</a></li>
+             <li><a href="http://127.0.0.1:8000/admin/">Admin</a></li>
+         </ul>
+        </nav>
+        <div class="pokemon">
+            <div class="pokemoncontainer">
+                {% for data in pokemon %}
+                    <div class="pokemonleft">
+                        <img src="{% static 'myfirstapp/pokemonpictures/'%}{{data.number}}.png" class="pokemonimg"> </img>
+                        <table class="pokemonstats">
+                            <tr>
+                                <th>Hp</th>
+                                <td>{{data.hp}}</td>
+                            </tr>
+                            <tr>
+                                <th>Attack</th>
+                                <td>{{data.attack}}</td>
+                            </tr>
+                            <tr>
+                                <th>Defense</th>
+                                <td>{{data.defense}}</td>
+                            </tr>
+                            <tr>
+                                <th>Special attack</th>
+                                <td>{{data.special_attack}}</td>
+                            </tr>
+                            <tr>
+                                <th>Special defense</th>
+                                <td>{{data.special_defense}}</td>
+                            </tr>
+                            <tr>
+                                <th>Speed</th>
+                                <td>{{data.speed}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="pokemonright">
+                        <table>
+                            <tr>
+                                 <th>Number</th>
+                                 <th>Name</th>
+                                 <th>Type</th>
+                                 <th>Height</th>
+                                 <th>Weight</th>
+                                 <th>Gender</th>
+                            </tr>
+                            <tr>
+                                <td>{{data.number}}</td>
+                                <td>{{data.name}}</td>
+                                <td>{{data.ptype}}</td>
+                                <td>{{data.height}}</td>
+                                <td>{{data.weight}}</td>
+                                <td>{{data.gender}}</td>
+                            </tr>
+                        </table>
+                        <br>
+                        <hr>
+                        <br>
+                        <table>
+                            <tr>
+                                 <th>Category</th>
+                                 <th>Abilities</th>
+                                 <th>Weakness</th>
+                            </tr>
+                            <tr>
+                                 <td>{{data.category}}</td>
+                                 <td>{{data.abilities}}</td>
+                                 <td>{{data.weakness}}</td>
+                            </tr>
+                        </table>
+                        <img src="{% static 'myfirstapp/pokemonpictures/'%}{{data.number}}.png" class="pokemonevolution"> </img>
+                        <i class="arrow right"></i>
+                        <img src="{% static 'myfirstapp/pokemonpictures/002.png'%}" class="pokemonevolution"> </img>
+                        <i class="arrow right"></i>
+                        <img src="{% static 'myfirstapp/pokemonpictures/003.png'%}" class="pokemonevolution"> </img>
+                    </div>
+                <br><br><br>
+
+
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
