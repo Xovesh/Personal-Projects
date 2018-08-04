@@ -6,13 +6,9 @@ You need to have installed BeautifulSoup4
 
 All you need to get it worked is to download all files except downloadinfo.
 
-Downloadinfo is for downloading from internet the necessary resources to get it worked.
+Downloadinfo is an script to create the database with the info and download all images
 
-To run up the program run __init.py__ file
-
-__NOTE__: You need an internet connection to automatically download files. 
-
-Last time tried downdloading files: 31/05/2018
+To run up the program run __main.py__ file
 
 ---------------------------------------------------------------------------
 
