@@ -80,65 +80,74 @@ class DownloadInfo:
     @staticmethod
     # download links path and check
     def checklinkspath():
-        conn = sqlite3.connect(DownloadInfo.DIRECTORY2 + DownloadInfo.FILE1)
-        c = conn.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS Pokedexlink (number INTEGER NOT NULL PRIMARY KEY, link text)''')
-        c.execute("SELECT number FROM Pokedexlink")
-        quantity = len(c.fetchall())
-        if quantity < DownloadInfo.MAX_POKEMON:
-            c.execute("DELETE FROM Pokedexlink")
-            conn.commit()
-            DownloadInfo.downloadlinkspath()
+        try:
+            conn = sqlite3.connect(DownloadInfo.DIRECTORY2 + DownloadInfo.FILE1)
+            c = conn.cursor()
+            c.execute('''CREATE TABLE IF NOT EXISTS Pokedexlink (number INTEGER NOT NULL PRIMARY KEY, link text)''')
+            c.execute("SELECT number FROM Pokedexlink")
+            quantity = len(c.fetchall())
+            if quantity < DownloadInfo.MAX_POKEMON:
+                c.execute("DELETE FROM Pokedexlink")
+                conn.commit()
+                DownloadInfo.downloadlinkspath()
+        except:
+            print("Error with the database")
 
     @staticmethod
     # download links path
     def downloadlinkspath():
-        # connection
-        headers = {'User-Agent': DownloadInfo.USER_AGENT}
-        data = request.Request(DownloadInfo.URLDB, None, headers)  # The assembled request
-        response = request.urlopen(data)
-        html = response.read()  # The data u need
+        try:
+            # connection
+            headers = {'User-Agent': DownloadInfo.USER_AGENT}
+            data = request.Request(DownloadInfo.URLDB, None, headers)  # The assembled request
+            response = request.urlopen(data)
+            html = response.read()  # The data u need
 
-        soup = BeautifulSoup(html, "html.parser")
-        table = soup.find("div", attrs={'class': 'infocard-tall-list'})
+            soup = BeautifulSoup(html, "html.parser")
+            table = soup.find("div", attrs={'class': 'infocard-tall-list'})
 
-        e = 1
-        linkin = True
-        for link in table.find_all("a"):
-            a = link.get("href")
-            if "/pokedex/" in a:
-                if linkin:
-                    conn = sqlite3.connect(DownloadInfo.DIRECTORY2 + DownloadInfo.FILE1)
-                    c = conn.cursor()
-                    print(a)
-                    pokemoninfo = [e, a]
-                    pokemoninfo = tuple(pokemoninfo)
-                    c.execute('''INSERT INTO Pokedexlink(number,link) VALUES (?,?)''', pokemoninfo)
-                    e += 1
-                    conn.commit()
-                    conn.close()
-                    linkin = False
-                else:
-                    linkin = True
+            e = 1
+            linkin = True
+            for link in table.find_all("a"):
+                a = link.get("href")
+                if "/pokedex/" in a:
+                    if linkin:
+                        conn = sqlite3.connect(DownloadInfo.DIRECTORY2 + DownloadInfo.FILE1)
+                        c = conn.cursor()
+                        print(a)
+                        pokemoninfo = [e, a]
+                        pokemoninfo = tuple(pokemoninfo)
+                        c.execute('''INSERT INTO Pokedexlink(number,link) VALUES (?,?)''', pokemoninfo)
+                        e += 1
+                        conn.commit()
+                        conn.close()
+                        linkin = False
+                    else:
+                        linkin = True
+        except:
+            print("Error downloading linkspaths")
 
     @staticmethod
     # checks if the pokemon info exists
     def checkpokemoninfo():
-        conn = sqlite3.connect(DownloadInfo.DIRECTORY2 + DownloadInfo.FILE1)
-        c = conn.cursor()
+        try:
+            conn = sqlite3.connect(DownloadInfo.DIRECTORY2 + DownloadInfo.FILE1)
+            c = conn.cursor()
 
-        c.execute('''CREATE TABLE IF NOT EXISTS Pokedex(number INTEGER NOT NULL PRIMARY KEY, name text, height REAL, 
-                  weigth REAL, gender INTEGER, category text, abilities text, ptype text, weakness text, hp INTEGER, 
-                          attack INTEGER, defense INTEGER, special_attack INTEGER, special_defense INTEGER, 
-                          speed INTEGER, firstevolution text)''')
+            c.execute('''CREATE TABLE IF NOT EXISTS Pokedex(number INTEGER NOT NULL PRIMARY KEY, name text, height REAL, 
+                      weigth REAL, gender INTEGER, category text, abilities text, ptype text, weakness text, hp INTEGER, 
+                              attack INTEGER, defense INTEGER, special_attack INTEGER, special_defense INTEGER, 
+                              speed INTEGER, firstevolution text)''')
 
-        for p in range(1, DownloadInfo.MAX_POKEMON + 1):
-            c.execute("SELECT * FROM Pokedex where number=(?)", (p,))
-            registros = c.fetchone()
-            if registros is None:
-                DownloadInfo.downloadpokemoninfo(p)
+            for p in range(1, DownloadInfo.MAX_POKEMON + 1):
+                c.execute("SELECT * FROM Pokedex where number=(?)", (p,))
+                registros = c.fetchone()
+                if registros is None:
+                    DownloadInfo.downloadpokemoninfo(p)
 
-        conn.close()
+            conn.close()
+        except:
+            print("Error with the database")
 
     @staticmethod
     # downloads the pokemon data where s is the number of the pokemon
