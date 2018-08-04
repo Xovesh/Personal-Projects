@@ -1,6 +1,6 @@
 body {
     background-color: aliceblue;
-    font-family: Verdana;
+    font-family: Verdana, serif;
 }
 
 .container{
@@ -35,23 +35,31 @@ li.currentli{
     background-color: lightcyan;
 }
 
-table, td, th {
+
+
+
+.pokedex table {
     border: 1px solid black;
-}
-
-table {
-    border-collapse: collapse;
     width: 100%;
+    border-collapse: collapse;
 }
 
-th {
+.pokedex th {
+    border: 1px solid black;
     height: 50px;
 }
 
-td {
+.pokedex td {
+    border: 1px solid black;
     text-align: center;
-	width: 100px;
+    min-width: 100px;
+    min-height: 50px;
 }
+
+
+
+
+
 
 .pokemon {
     background-color: ivory;
@@ -73,18 +81,52 @@ td {
 }
 
 .pokemonright{
-    margin-top:8px;
     margin-left: 235px;
+    margin-top:6px;
 }
 
 .pokemonstats{
-    width:225px;
-    margin-top:5px;
+    width: 225px;
+    margin-top: 5px;
 }
 
-.pokemonevolution{
-    margin-top:9%;
-    margin-left:5%;
+.pokemonstats table{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.pokemonstats th {
+    border: 1px solid black;
+    height: 50px;
+}
+
+.pokemonstats td {
+    border: 1px solid black;
+    text-align: center;
+    min-width: 100px;
+    min-height: 50px;
+}
+
+.pokemoninfo table{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.pokemoninfo th {
+    height: 50px;
+    border: 1px solid black;
+}
+
+.pokemoninfo td {
+    text-align: center;
+    border: 1px solid black;
+    min-width: 100px;
+    min-height: 50px;
+}
+
+.pokemonevolutions{
+    margin-left: 100px;
 }
 
 i {

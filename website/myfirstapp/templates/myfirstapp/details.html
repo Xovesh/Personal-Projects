@@ -11,8 +11,7 @@
         <nav>
          <ul>
              <li><a href="http://127.0.0.1:8000">Index</a></li>
-             <li><a href="http://127.0.0.1:8000/myfirstapp">Pokedex</a></li>
-             <li><a href="#">Evolutions</a></li>
+             <li class="currentli"><a href="http://127.0.0.1:8000/myfirstapp">Pokedex</a></li>
              <li><a href="http://127.0.0.1:8000/admin/">Admin</a></li>
          </ul>
         </nav>
@@ -20,79 +19,102 @@
             <div class="pokemoncontainer">
                 {% for data in pokemon %}
                     <div class="pokemonleft">
-                        <img src="{% static 'myfirstapp/pokemonpictures/'%}{{data.number}}.png" class="pokemonimg"> </img>
-                        <table class="pokemonstats">
-                            <tr>
-                                <th>Hp</th>
-                                <td>{{data.hp}}</td>
-                            </tr>
-                            <tr>
-                                <th>Attack</th>
-                                <td>{{data.attack}}</td>
-                            </tr>
-                            <tr>
-                                <th>Defense</th>
-                                <td>{{data.defense}}</td>
-                            </tr>
-                            <tr>
-                                <th>Special attack</th>
-                                <td>{{data.special_attack}}</td>
-                            </tr>
-                            <tr>
-                                <th>Special defense</th>
-                                <td>{{data.special_defense}}</td>
-                            </tr>
-                            <tr>
-                                <th>Speed</th>
-                                <td>{{data.speed}}</td>
-                            </tr>
-                        </table>
+                        <img src="{% static 'myfirstapp/pokemonpictures/'%}{{data.number}}.png" class="pokemonimg" width="215" height="215"> </img>
+                        <div class="pokemonstats">
+                            <table>
+                                <tr>
+                                    <th>Hp</th>
+                                    <td>{{data.hp}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Attack</th>
+                                    <td>{{data.attack}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Defense</th>
+                                    <td>{{data.defense}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Special attack</th>
+                                    <td>{{data.special_attack}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Special defense</th>
+                                    <td>{{data.special_defense}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Speed</th>
+                                    <td>{{data.speed}}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="pokemonright">
-                        <table>
-                            <tr>
-                                 <th>Number</th>
-                                 <th>Name</th>
-                                 <th>Type</th>
-                                 <th>Height</th>
-                                 <th>Weight</th>
-                                 <th>Gender</th>
-                            </tr>
-                            <tr>
-                                <td>{{data.number}}</td>
-                                <td>{{data.name}}</td>
-                                <td>{{data.ptype}}</td>
-                                <td>{{data.height}}</td>
-                                <td>{{data.weight}}</td>
-                                <td>{{data.gender}}</td>
-                            </tr>
-                        </table>
+                        <div class="pokemoninfo">
+                            <table>
+                                <tr>
+                                     <th>Number</th>
+                                     <th>Name</th>
+                                     <th>Type</th>
+                                     <th>Height</th>
+                                     <th>Weight</th>
+                                     <th>Gender</th>
+                                </tr>
+                                <tr>
+                                    <td>{{data.number}}</td>
+                                    <td>{{data.name}}</td>
+                                    <td>{{data.ptype}}</td>
+                                    <td>{{data.height}}</td>
+                                    <td>{{data.weight}}</td>
+                                    <td>{% if data.gender == 0 %}
+                                        None
+                                        {% elif data.gender == 1 %}
+                                        Male
+                                        {% elif data.gender == 2 %}
+                                        Female
+                                        {% else %}
+                                        Male/Female
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                            <br>
+                            <hr>
+                            <br>
+                            <table>
+                                <tr>
+                                     <th>Category</th>
+                                     <th>Abilities</th>
+                                     <th>Weakness</th>
+                                </tr>
+                                <tr>
+                                     <td>{{data.category}}</td>
+                                     <td>{{data.abilities}}</td>
+                                     <td>{{data.weakness}}</td>
+                                </tr>
+                            </table>
+                        </div>
                         <br>
-                        <hr>
-                        <br>
-                        <table>
-                            <tr>
-                                 <th>Category</th>
-                                 <th>Abilities</th>
-                                 <th>Weakness</th>
-                            </tr>
-                            <tr>
-                                 <td>{{data.category}}</td>
-                                 <td>{{data.abilities}}</td>
-                                 <td>{{data.weakness}}</td>
-                            </tr>
-                        </table>
-                        <img src="{% static 'myfirstapp/pokemonpictures/'%}{{data.number}}.png" class="pokemonevolution"> </img>
-                        <i class="arrow right"></i>
-                        <img src="{% static 'myfirstapp/pokemonpictures/002.png'%}" class="pokemonevolution"> </img>
-                        <i class="arrow right"></i>
-                        <img src="{% static 'myfirstapp/pokemonpictures/003.png'%}" class="pokemonevolution"> </img>
+                        <div class="pokemonevolutions">
+                            <table>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <th><h2>Evolutions</h2></th>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    {% for evol in evolutions %}
+                                    <td><img src="{% static 'myfirstapp/pokemonpictures/'%}{{evol.number}}.png" width="215" height="215"> </img></td>
+                                    <td><i class="arrow right"></i></td>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                <br><br><br>
-
-
-
+                <br>
                 {% endfor %}
             </div>
         </div>

@@ -13,11 +13,10 @@
          <ul>
              <li><a href="http://127.0.0.1:8000">Index</a></li>
              <li class="currentli"><a href="http://127.0.0.1:8000/myfirstapp">Pokedex</a></li>
-             <li><a href="#">Evolutions</a></li>
              <li><a href="http://127.0.0.1:8000/admin/">Admin</a></li>
          </ul>
         </nav>
-        <div>
+        <div class="pokedex">
             <table>
                  <tr>
                      <th>Number</th>
@@ -36,7 +35,7 @@
                     <td>{{pokemon.number}}</td>
                     {% load static %}
                     <td><img src="{% static 'myfirstapp/pokemonpictures/'%}{{pokemon.number}}.png"width="50" height="50"> </img> </td>
-                    <td><a href="{{pokemon.name}}">{{pokemon.name}}</a></td>
+                    <td><a href="pokemon/{{pokemon.name}}">{{pokemon.name}}</a></td>
                     <td>{{pokemon.ptype}}</td>
                     <td>{{pokemon.hp}}</td>
                     <td>{{pokemon.attack}}</td>
