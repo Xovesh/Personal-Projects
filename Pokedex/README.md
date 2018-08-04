@@ -16,3 +16,7 @@ To run up the program run __init.py__ file, everything needed is going to be dow
 
 __NOTE__: You need an internet connection to automatically download files. 
 Last time tried downdloading files: 31/05/2018
+
+---------------------------------------------------------------------------
+22/07/2018
+DownloadInfo not working properly need small changes. You need to download pokemoninfo and pokemonpictures to work properly.
