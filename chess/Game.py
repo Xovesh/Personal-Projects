@@ -265,7 +265,7 @@ class Chess:
 
     def pawnfinal(self, piece):
         if (piece.gety() == 7 or piece.gety() == 0) and piece.getname() == "Pawn":
-            x = input("You can change your piece for a dead one: yes/no")
+            x = input("You can change your piece for a dead one: yes/no ")
             piececolor = None
             if x == "yes":
                 if self.shift == "White":
@@ -275,10 +275,9 @@ class Chess:
                 selected = False
             else:
                 selected = True
-            print("Choose one: ", self.table.getwhitedeadpieces())
             while not selected:
-                l = input("Choose one: P --> Pawn, Q --> Queen, N --> Knight, B --> Bishop, R --> Rook")
                 print(self.table.getwhitedeadpieces())
+                l = input("Choose one: P --> Pawn, Q --> Queen, N --> Knight, B --> Bishop, R --> Rook ")
                 for i in piececolor[0]:
                     if i.getname() == l:
                         i.setx(piece.getx())
@@ -287,9 +286,12 @@ class Chess:
                         for j in range(0, len(piececolor[1])):
                             if piececolor[1][j].getid() == self.table.getplayboard()[piece.gety()][piece.getx()].getid():
                                 piececolor[1].pop(j)
-
                                 break
                         self.table.updatepiece(i, piece.getx(), piece.gety())
+                        for j in range(0, len(piececolor[0])):
+                            if piececolor[0][j].getid() == self.table.getplayboard()[i.gety()][i.getx()].getid():
+                                piececolor[1].append(piececolor[0].pop(j))
+                                break
                         selected = True
                 if not selected:
                     print("Incorrect input")
@@ -410,36 +412,48 @@ class Chess:
 
     # special function to make automatic movements
     def automatico(self):
-        lista = (
-            ((4, 2), (4, 4)),
-            ((4, 7), (4, 5)),
-            ((5, 2), (5, 4)),
-            ((4, 5), (5, 4)),
+        #  lista = (
+        #     ((4, 2), (4, 4)),
+        #     ((4, 7), (4, 5)),
+        #     ((5, 2), (5, 4)),
+        #     ((4, 5), (5, 4)),
+        #     ((6, 1), (5, 3)),
+        #     ((6, 7), (6, 5)),
+        #     ((5, 1), (2, 4)),
+        #     ((6, 5), (6, 4)),
+        #     ((3, 2), (3, 4)),
+        #     ((6, 4), (5, 3)),
+        #     ((3, 1), (5, 3)),
+        #     ((5, 8), (7, 6)),
+        # )
+        # lista2 = (
+        #     ((0, 2), (0, 4)),
+        #     ((6, 8), (5, 6)),
+        #     ((0, 4), (0, 5)),
+        #     ((5, 6), (6, 4)),
+        #     ((0, 5), (0, 6)),
+        #     ((6, 4), (7, 2)),
+        #     ((0, 6), (1, 7)),
+        #     ((7, 2), (5, 1)),
+        #     ((1, 7), (2, 8)),
+        #     ((5, 1), (3, 2)),
+        # )
+        lista3 = (
+            ((0, 7), (0, 5)),
             ((6, 1), (5, 3)),
-            ((6, 7), (6, 5)),
-            ((5, 1), (2, 4)),
-            ((6, 5), (6, 4)),
-            ((3, 2), (3, 4)),
-            ((6, 4), (5, 3)),
-            ((3, 1), (5, 3)),
-            ((5, 8), (7, 6)),
-        )
-        lista2= (
-            ((0, 2), (0, 4)),
-            ((6, 8), (5, 6)),
-            ((0, 4), (0, 5)),
-            ((5, 6), (6, 4)),
-            ((0, 5), (0, 6)),
-            ((6, 4), (7, 2)),
-            ((0, 6), (1, 7)),
-            ((7, 2), (5, 1)),
-            ((1, 7), (2, 8)),
-            ((5, 1), (3, 2)),
+            ((0, 5), (0, 4)),
+            ((5, 3), (6, 5)),
+            ((0, 4), (0, 3)),
+            ((6, 5), (7, 7)),
+            ((0, 3), (1, 2)),
+            ((7, 7), (5, 8)),
+            ((1, 2), (2, 1)),
+            ((5, 8), (3, 7)),
         )
         # A=0 B=1 C=2 D=3 E=4 F=5 G=6 H=7
         # piece = None
         # piecename = ""
-        for x, y in lista2:
+        for x, y in lista3:
             self.checkmovements()
             # self.table.visualize()
             piece = self.table.getplayboard()[x[1]-1][x[0]]
@@ -466,5 +480,5 @@ class Chess:
         print("")
         print(self.table.getblackdeadpieces())
         print("")
-        for i in self.table.getwhitedeadpieces()+self.table.getblackdeadpieces():
+        for i in self.table.getdeadpieces():
             print(i.getname(), i.getx(), i.gety())

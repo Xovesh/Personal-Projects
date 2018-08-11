@@ -1,10 +1,10 @@
 class Table:
     def __init__(self, white, black):
-        self.whitepieces = white
-        self.blackpieces = black
-        self.whitedeadpieces = []
-        self.blackdeadpieces = []
-        self.playboard = self.initialice()
+        self.__whitepieces = white
+        self.__blackpieces = black
+        self.__whitedeadpieces = []
+        self.__blackdeadpieces = []
+        self.__playboard = self.initialice()
 
     def initialice(self):
         playb = []
@@ -21,22 +21,22 @@ class Table:
         return None
 
     def updatepiece(self, piece, x, y):
-        self.playboard[piece.gety()][piece.getx()] = None
-        self.playboard[y][x] = piece
+        self.getplayboard()[piece.gety()][piece.getx()] = None
+        self.getplayboard()[y][x] = piece
         piece.setx(x)
         piece.sety(y)
 
     def deletepiece(self, x, y):
-        self.playboard[y][x] = None
+        self.getplayboard()[y][x] = None
 
     def visualize(self):
         xpositions = ("A", "B", "C", "D", "E", "F", "G", "H")
         print("\nBlack | White eaten Pieces: ", self.getwhitedeadpieces(), "\n")
         for i in range(7, -1, -1):
-            print(i, end=" ")
+            print(i+1, end=" ")
             for j in range(0, 8):
-                if self.playboard[i][j] is not None:
-                    print(self.playboard[i][j], end=" ")
+                if self.getplayboard()[i][j] is not None:
+                    print(self.getplayboard()[i][j], end=" ")
                 else:
                     print(" ", end=" ")
             print("")
@@ -47,19 +47,22 @@ class Table:
         print("\nWhite | Black eaten Pieces: ", self.getblackdeadpieces())
 
     def getwhitedeadpieces(self):
-        return self.whitedeadpieces
+        return self.__whitedeadpieces
 
     def getblackdeadpieces(self):
-        return self.blackdeadpieces
+        return self.__blackdeadpieces
 
     def getplayboard(self):
-        return self.playboard
+        return self.__playboard
 
     def getwhitepieces(self):
-        return self.whitepieces
+        return self.__whitepieces
 
     def getblackpieces(self):
-        return self.blackpieces
+        return self.__blackpieces
 
     def getpieces(self):
-        return self.whitepieces + self.blackpieces
+        return self.__whitepieces + self.__blackpieces
+
+    def getdeadpieces(self):
+        return self.__blackdeadpieces + self.__whitedeadpieces
