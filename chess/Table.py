@@ -20,6 +20,11 @@ class Table:
                 return i
         return None
 
+    def getpieceid(self, k):
+        for i in self.getdeadandlivepieces():
+            if i.getid() == k:
+                return i
+
     def updatepiece(self, piece, x, y):
         self.getplayboard()[piece.gety()][piece.getx()] = None
         self.getplayboard()[y][x] = piece
@@ -66,3 +71,6 @@ class Table:
 
     def getdeadpieces(self):
         return self.__blackdeadpieces + self.__whitedeadpieces
+
+    def getdeadandlivepieces(self):
+        return self.getpieces() + self.getdeadpieces()

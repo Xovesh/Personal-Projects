@@ -23,3 +23,6 @@ class Piece:
 
     def sety(self, y):
         self.__y = y
+
+    def getxy(self):
+        print(self.__x, self.__y)

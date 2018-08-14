@@ -1,5 +1,6 @@
 from chess import Table
 from chess.pieces import Pawn, Queen, Rook, Knight, King, Bishop
+import time
 
 
 class Chess:
@@ -25,6 +26,13 @@ class Chess:
         self.reverseletterconversion = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7}
         self.winner = None
         self.finish = False
+        self.time = None
+
+    def starttime(self):
+        self.time = time.time()
+
+    def gettime(self):
+        return self.time
 
     def pawnmovement(self, j):
         playb = self.table.getplayboard()
@@ -247,8 +255,10 @@ class Chess:
         return possiblemovements
 
     def movepiece(self, piece, x, y):
+        delete = False
         try:
             if self.table.getplayboard()[y][x] is not None:
+                delete = True
                 if piece.getcolor() == "White":
                     info = self.table.getblackpieces()
                     self.table.getblackdeadpieces().append(self.table.getplayboard()[y][x])
@@ -260,6 +270,7 @@ class Chess:
                         info.pop(i)
                         break
             self.table.updatepiece(piece, x, y)
+            return delete
         except:
             print("ERROR")
 
@@ -296,100 +307,19 @@ class Chess:
                 if not selected:
                     print("Incorrect input")
 
-    def checkmovements(self):
-        self.table.visualize()
-        print("\n", self.shift, " possible movements\n")
-        if self.shift == "White":
-            piececolor = self.table.getwhitepieces()
-        else:
-            piececolor = self.table.getblackpieces()
-        for j in piececolor:
-            if j.getname() is "Knight":
-                self.knightmovement(j)
-            elif j.getname() is "Pawn":
-                self.pawnmovement(j)
-            elif j.getname() is "Queen":
-                self.queenmovement(j)
-            elif j.getname() is "King":
-                self.kingmovement(j)
-            elif j.getname() is "Bishop":
-                self.bishopmovement(j)
-            elif j.getname() is "Rook":
-                self.rookmovement(j)
-
-    def move(self):
-        selectpiece = False
-        movepiece = False
-        x, y, x2, y2 = -1, -1, -1, -1
-        piecename = ""
-        piece = None
-        z = "No"
-        while z != "yes":
-            while not selectpiece:
-                try:
-                    x = self.reverseletterconversion[input("Enter the letter of the piece where is located ")]
-                    y = int(input("Enter the number of the piece where is located "))
-                    try:
-                        if self.table.getplayboard()[y][x].getcolor() is not self.shift:
-                            print("Thats not your piece, select other")
-                        else:
-                            selectpiece = True
-                            piece = self.table.getplayboard()[y][x]
-                            piecename = piece.getname()
-                    except:
-                        print("Not good values")
-                except:
-                    print("Not good values")
-
-            print("Where do you want to move?")
-
-            while not movepiece:
-                try:
-                    x2 = self.reverseletterconversion[input("Enter the letter of the piece where do you want to move ")]
-                    y2 = int(input("Enter the number of the piece where do you want to move "))
-                    s = None
-                    if piecename is "Knight":
-                        s = self.knightmovement(piece)
-                    elif piecename is "Pawn":
-                        s = self.pawnmovement(piece)
-                    elif piecename is "Queen":
-                        s = self.queenmovement(piece)
-                    elif piecename is "King":
-                        s = self.kingmovement(piece)
-                    elif piecename is "Bishop":
-                        s = self.bishopmovement(piece)
-                    elif piecename is "Rook":
-                        s = self.rookmovement(piece)
-                    if (x2, y2) in s:
-                        movepiece = True
-                    else:
-                        print("You cant do that")
-                except:
-                    print("You cant do that")
-
-            z = input("Are you sure you want to move the %s from %s %d to %s %d | yes/no " % (
-                self.table.getplayboard()[y][self.reverseletterconversion[self.letterconversion[x]]].getname(),
-                self.letterconversion[x], y, self.letterconversion[x2], y2))
-
-            if z == "yes":
-                try:
-                    self.movepiece(piece, x2, y2)
-                    if piecename == "Pawn":
-                        piece.setfirstmove()
-                except:
-                    print("Error")
-            else:
-                selectpiece = False
-                movepiece = False
-
-        if self.shift is "White":
-            self.shift = "Black"
-        else:
-            self.shift = "White"
-
-    def moveoreat(self):
-        print("\nIs  the turn of the ", self.shift, " pieces")
-        self.move()
+    def checkmovements(self, j):
+        if j.getname() is "Knight":
+            return self.knightmovement(j)
+        elif j.getname() is "Pawn":
+            return self.pawnmovement(j)
+        elif j.getname() is "Queen":
+            return self.queenmovement(j)
+        elif j.getname() is "King":
+            return self.kingmovement(j)
+        elif j.getname() is "Bishop":
+            return self.bishopmovement(j)
+        elif j.getname() is "Rook":
+            return self.rookmovement(j)
 
     def checkwinner(self):
         for i in self.table.getwhitedeadpieces():
@@ -401,14 +331,11 @@ class Chess:
                 self.finish = True
                 self.winner = self.player1
 
-    def start(self):
-        while not self.finish:
-            self.checkmovements()
-            self.moveoreat()
-            self.checkwinner()
-            # for i in self.table.boardpieces:
-            #     print(i.getname(), i.getx(), i.gety())
-        print("The winner is: ", self.winner)
+    def changecolor(self):
+        if self.shift is "White":
+            self.shift = "Black"
+        else:
+            self.shift = "White"
 
     # special function to make automatic movements
     def automatico(self):

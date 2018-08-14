@@ -7,9 +7,16 @@ class King(Piece.Piece):
         super().__init__(identificator, color, x, y)
         self.__name = "King"
         self.__check = False
+        self.__firstmove = True
 
     def getname(self):
         return self.__name
+
+    def getfirstmove(self):
+        return self.__firstmove
+
+    def setfirstmove(self):
+        self.__firstmove = False
 
     def __str__(self):
         return "K"
