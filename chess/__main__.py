@@ -21,6 +21,7 @@ class App:
     def __init__(self):
         self.chess = Game.Chess()
         self.root = Tk()
+        self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.geometry("920x750")
         self.root.iconbitmap('icon.ico')
         self.root.resizable(0, 0)
@@ -31,6 +32,7 @@ class App:
         self.right = Frame(self.root)
         self.game = Frame(self.root)
         self.lastmovements = []
+        self.piecesposition = {}
 
         self.table()
         mainloop()
@@ -52,12 +54,12 @@ class App:
             self.chess.checkwinner()
             self.visualizepieces()
         messagebox.showinfo("Classic Chess", "Game Finished, the winner is " + self.chess.winner[0])
+        self.root.destroy()
 
     def time(self):
         self.label3.config(text="Time: " + str(int(time.time() - self.chess.gettime())) + "s")
 
     def pieces(self):
-        self.piecesposition = {}
         for j in self.chess.table.getpieces():
             self.piecesposition[j.getid()] = Button(self.game, text=j.getcolor(), relief=FLAT,
                                                     command=lambda piece=j: self.movements(piece))
@@ -83,23 +85,54 @@ class App:
         self.chess.changecolor()
         if s:
             if self.chess.shift == "White":
-                for i in self.chess.table.getwhitedeadpieces():
-                    if i.getx() == x and i.gety() == y:
-                        self.piecesposition[i.getid()].destroy()
+                k = (self.chess.table.getwhitedeadpieces(), self.deadwhite)
             else:
-                for i in self.chess.table.getblackdeadpieces():
-                    if i.getx() == x and i.gety() == y:
-                        self.piecesposition[i.getid()].destroy()
-        print(self.chess.table.getpieces())
-        print("")
-        print(self.chess.table.getdeadpieces())
+                k = (self.chess.table.getblackdeadpieces(), self.deadblack)
+            for i in k[0]:
+                j = len(k[0])
+                if j > 12:
+                    l = 3
+                    j = j-12
+                elif j > 8:
+                    l = 2
+                    j = j-8
+                elif j > 4:
+                    l = 1
+                    j = j-4
+                else:
+                    l = 0
+                if i.getx() == x and i.gety() == y:
+                    self.piecesposition[i.getid()].destroy()
+                    self.piecesposition[i.getid()] = Button(k[1], text=i.getname(), state=DISABLED).grid(row=l, column=j)
+        self.chess.table.visualize()
 
-    def visualizepieces(self):
+    def noclosing(self):
+        pass
+
+    def close(self):
+        messagebox.showinfo("Classic Chess", "Thanks for Playing")
+        self.root.destroy()
+
+    def promotion(self, piece):
+        self.top = Toplevel(self.root, height=100, width=100)
+        self.top.protocol("WM_DELETE_WINDOW", self.noclosing)
+        Label(self.top, text="Pawn promotion ", width=20, height=4).grid(row=0, column=1)
+        Label(self.top, text="Select One", width=20, height=4).grid(row=0, column=2)
+        Button(self.top, text="Bishop", command=lambda l="Bishop": self.proselect(piece, l), width=20, height=4).grid(row=1, column=0)
+        Button(self.top, text="Rook", command=lambda l="Rook": self.proselect(piece, l), width=20, height=4).grid(row=1, column=1)
+        Button(self.top, text="Queen", command=lambda l="Queen": self.proselect(piece, l), width=20, height=4).grid(row=1, column=2)
+        Button(self.top, text="Knight", command=lambda l="Queen": self.proselect(piece, l), width=20, height=4).grid(row=1, column=3)
+        self.top.mainloop()
+
+    def proselect(self, piece, l):
+        self.top.destroy()
+
+    def visualizepieces(self, arg="normal"):
         for r in self.chess.table.getpieces():
             if self.chess.shift != r.getcolor():
                 self.piecesposition[r.getid()].config(state=DISABLED)
             else:
-                self.piecesposition[r.getid()].config(state=NORMAL)
+                self.piecesposition[r.getid()].config(state=arg)
             self.piecesposition[r.getid()].grid(row=9 - r.gety() - 2, column=r.getx())
 
     def gametable(self):
@@ -147,11 +180,11 @@ class App:
         self.deadwhite = Frame(self.right)
         self.deadwhite.grid(row=3, column=0)
 
-        self.deadblack = Frame(self.right)
-        self.deadblack.grid(row=4, column=0)
-
         label2 = ttk.Label(self.right, text="Dead Black Pieces", font=font1)
-        label2.grid(row=5, column=0)
+        label2.grid(row=4, column=0)
+
+        self.deadblack = Frame(self.right)
+        self.deadblack.grid(row=5, column=0)
 
         self.right.grid(row=0, column=2, sticky=(N, S), pady=25)
 

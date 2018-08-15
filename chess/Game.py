@@ -276,36 +276,9 @@ class Chess:
 
     def pawnfinal(self, piece):
         if (piece.gety() == 7 or piece.gety() == 0) and piece.getname() == "Pawn":
-            x = input("You can change your piece for a dead one: yes/no ")
-            piececolor = None
-            if x == "yes":
-                if self.shift == "White":
-                    piececolor = (self.table.getwhitedeadpieces(), self.table.getwhitepieces())
-                else:
-                    piececolor = (self.table.getblackdeadpieces(), self.table.getblackpieces())
-                selected = False
-            else:
-                selected = True
-            while not selected:
-                print(self.table.getwhitedeadpieces())
-                l = input("Choose one: P --> Pawn, Q --> Queen, N --> Knight, B --> Bishop, R --> Rook ")
-                for i in piececolor[0]:
-                    if i.getname() == l:
-                        i.setx(piece.getx())
-                        i.sety(piece.gety())
-                        piececolor[0].append(piece)
-                        for j in range(0, len(piececolor[1])):
-                            if piececolor[1][j].getid() == self.table.getplayboard()[piece.gety()][piece.getx()].getid():
-                                piececolor[1].pop(j)
-                                break
-                        self.table.updatepiece(i, piece.getx(), piece.gety())
-                        for j in range(0, len(piececolor[0])):
-                            if piececolor[0][j].getid() == self.table.getplayboard()[i.gety()][i.getx()].getid():
-                                piececolor[1].append(piececolor[0].pop(j))
-                                break
-                        selected = True
-                if not selected:
-                    print("Incorrect input")
+            return True
+        else:
+            return False
 
     def checkmovements(self, j):
         if j.getname() is "Knight":
