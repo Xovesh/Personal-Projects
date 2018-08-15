@@ -1,5 +1,3 @@
 Unfinished things:
-- Castling
-- Change Pawn in the final of the map
-- GUI
+- Castling and Promotion
 - Check / Checkmate alerts
