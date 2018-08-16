@@ -8,3 +8,6 @@ __Webpage__: Creating a webpage using DJango Framework.
 - Pokedex included
 
 __Chess__: Basic GUI based chess
+
+Future projects:
+- Sudoku
