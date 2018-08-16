@@ -1,5 +1,5 @@
 Unfinished things:
-- Castling
-- Change Pawn in the final of the map
-- GUI
 - Check / Checkmate alerts
+- Need to add images
+
+You can play with without the features that are above
