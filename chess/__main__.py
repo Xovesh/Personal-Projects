@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter.font import Font
 from tkinter import messagebox
 import time
+from PIL import ImageTk, Image
 
 
 # icons by Freepik
@@ -61,8 +62,13 @@ class App:
 
     def pieces(self):
         for j in self.chess.table.getpieces():
-            self.piecesposition[j.getid()] = Button(self.game, text=j.getcolor(), relief=FLAT,
-                                                    command=lambda piece=j: self.movements(piece))
+            if j.getcolor() == "White":
+                img = ImageTk.PhotoImage(Image.open(App.IMAGESWHITE[j.getname()]).convert("RGBA"))
+            else:
+                img = ImageTk.PhotoImage(Image.open(App.IMAGESBLACK[j.getname()]).convert("RGBA"))
+            self.piecesposition[j.getid()] = Button(self.game, text=j.getname() + "\n" + j.getcolor(), relief=FLAT,
+                                                    command=lambda piece=j: self.movements(piece), image=img, bg="#E6E6E6")
+            self.piecesposition[j.getid()].image = img
 
     def movements(self, piece):
         self.clearmovements()
@@ -78,11 +84,15 @@ class App:
             l.destroy()
 
     def move(self, piece, x, y):
-        if piece.getfirstmove():
-            piece.setfirstmove()
         s = self.chess.movepiece(piece, x, y)
         self.clearmovements()
+        if self.chess.pawnfinal(piece):
+            self.promotion(piece)
+        if self.chess.castling(piece):
+            pass
         self.chess.changecolor()
+        if piece.getfirstmove():
+            piece.setfirstmove()
         if s:
             if self.chess.shift == "White":
                 k = (self.chess.table.getwhitedeadpieces(), self.deadwhite)
@@ -115,16 +125,24 @@ class App:
 
     def promotion(self, piece):
         self.top = Toplevel(self.root, height=100, width=100)
-        self.top.protocol("WM_DELETE_WINDOW", self.noclosing)
         Label(self.top, text="Pawn promotion ", width=20, height=4).grid(row=0, column=1)
         Label(self.top, text="Select One", width=20, height=4).grid(row=0, column=2)
         Button(self.top, text="Bishop", command=lambda l="Bishop": self.proselect(piece, l), width=20, height=4).grid(row=1, column=0)
         Button(self.top, text="Rook", command=lambda l="Rook": self.proselect(piece, l), width=20, height=4).grid(row=1, column=1)
         Button(self.top, text="Queen", command=lambda l="Queen": self.proselect(piece, l), width=20, height=4).grid(row=1, column=2)
-        Button(self.top, text="Knight", command=lambda l="Queen": self.proselect(piece, l), width=20, height=4).grid(row=1, column=3)
-        self.top.mainloop()
+        Button(self.top, text="Knight", command=lambda l="Knight": self.proselect(piece, l), width=20, height=4).grid(row=1, column=3)
+        self.visualizepieces(arg="disabled")
+        self.root.wait_window(self.top)
 
     def proselect(self, piece, l):
+        j = self.chess.promotioned(piece, l)
+        self.piecesposition[piece.getid()].destroy()
+        if piece.getcolor() == "White":
+            img = ImageTk.PhotoImage(Image.open(App.IMAGESWHITE[j.getname()]).convert("RGBA"))
+        else:
+            img = ImageTk.PhotoImage(Image.open(App.IMAGESBLACK[j.getname()]).convert("RGBA"))
+        self.piecesposition[piece.getid()] = Button(self.game, text=j.getname() + "\n" + j.getcolor(), relief=FLAT, command=lambda: self.movements(j), image=img, bg="#E6E6E6")
+        self.piecesposition[piece.getid()].image = img
         self.top.destroy()
 
     def visualizepieces(self, arg="normal"):

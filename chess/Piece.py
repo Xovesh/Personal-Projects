@@ -5,6 +5,13 @@ class Piece:
         self.__color = color
         self.__x = x
         self.__y = y
+        self.__firstmove = True
+
+    def getfirstmove(self):
+        return self.__firstmove
+
+    def setfirstmove(self):
+        self.__firstmove = False
 
     def getid(self):
         return self.__id
@@ -25,4 +32,4 @@ class Piece:
         self.__y = y
 
     def getxy(self):
-        print(self.__x, self.__y)
+        return self.__x, self.__y
