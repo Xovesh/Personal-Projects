@@ -1,5 +1,4 @@
 Unfinished things:
-- Castling and Promotion
 - Check / Checkmate alerts
 - Need to add images
 
