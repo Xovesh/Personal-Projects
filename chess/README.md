@@ -1,5 +1,7 @@
 Unfinished things:
 - Check / Checkmate alerts
-- Need to add images
+
+Future improvements
+- Colors Update
 
 You can play with without the features that are above
