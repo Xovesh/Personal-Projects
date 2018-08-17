@@ -5,41 +5,42 @@ import time
 
 class Chess:
 
+    LETTERCONVERSION = {0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F", 6: "G", 7: "H"}
+    REVERSELETTERCONVERSION = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7}
+
+    # constructor
     def __init__(self):
         self.classic = ([Rook.Rook(0, "White", 0, 0), Knight.Knight(1, "White", 1, 0), Bishop.Bishop(2, "White", 2, 0),
                          Queen.Queen(3, "White", 3, 0), King.King(4, "White", 4, 0), Bishop.Bishop(5, "White", 5, 0),
                          Knight.Knight(6, "White", 6, 0), Rook.Rook(7, "White", 7, 0), Pawn.Pawn(8, "White", 0, 1),
                          Pawn.Pawn(9, "White", 1, 1), Pawn.Pawn(10, "White", 2, 1), Pawn.Pawn(11, "White", 3, 1),
                          Pawn.Pawn(12, "White", 4, 1), Pawn.Pawn(13, "White", 5, 1), Pawn.Pawn(14, "White", 6, 1),
-                         Pawn.Pawn(15, "White", 7, 1)], [Pawn.Pawn(16, "Black", 0, 6), Pawn.Pawn(17, "Black", 1, 6),
-                                                         Pawn.Pawn(18, "Black", 2, 6), Pawn.Pawn(19, "Black", 3, 6),
-                                                         Pawn.Pawn(20, "Black", 4, 6),
-                                                         Pawn.Pawn(21, "Black", 5, 6), Pawn.Pawn(22, "Black", 6, 6),
-                                                         Pawn.Pawn(23, "Black", 7, 6),
-                                                         Rook.Rook(24, "Black", 0, 7), Knight.Knight(25, "Black", 1, 7),
-                                                         Bishop.Bishop(26, "Black", 2, 7),
-                                                         King.King(27, "Black", 4, 7), Queen.Queen(28, "Black", 3, 7),
-                                                         Bishop.Bishop(29, "Black", 5, 7),
-                                                         Knight.Knight(30, "Black", 6, 7),
-                                                         Rook.Rook(31, "Black", 7, 7)])
+                         Pawn.Pawn(15, "White", 7, 1)],
+                        [Pawn.Pawn(16, "Black", 0, 6), Pawn.Pawn(17, "Black", 1, 6), Pawn.Pawn(18, "Black", 2, 6),
+                         Pawn.Pawn(19, "Black", 3, 6), Pawn.Pawn(20, "Black", 4, 6), Pawn.Pawn(21, "Black", 5, 6),
+                         Pawn.Pawn(22, "Black", 6, 6), Pawn.Pawn(23, "Black", 7, 6), Rook.Rook(24, "Black", 0, 7),
+                         Knight.Knight(25, "Black", 1, 7), Bishop.Bishop(26, "Black", 2, 7), King.King(27, "Black", 4, 7),
+                         Queen.Queen(28, "Black", 3, 7), Bishop.Bishop(29, "Black", 5, 7), Knight.Knight(30, "Black", 6, 7),
+                         Rook.Rook(31, "Black", 7, 7)])
 
         self.table = Table.Table(self.classic[0], self.classic[1])
         self.shift = "White"
         self.player1 = ("Player 1", "White")
         self.player2 = ("Player 2", "Black")
-        self.letterconversion = {0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F", 6: "G", 7: "H"}
-        self.reverseletterconversion = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7}
         self.winner = None
         self.finish = False
         self.time = None
 
+    # starts the timer
     def starttime(self):
         self.time = time.time()
 
+    # returns the time
     def gettime(self):
         return self.time
 
-    def pawnmovement(self, j):
+    # returns the positions available for a pawn
+    def pawnmovement(self, j: Pawn.Pawn):
         playb = self.table.getplayboard()
         pawnmovesxy = {"White": (2, 1), "Black": (-2, -1)}
         pawneat = {"White": ((-1, 1), (1, 1)), "Black": ((-1, -1), (1, -1))}
@@ -49,23 +50,25 @@ class Chess:
         if 0 <= j.gety() + l <= 7:
             if playb[j.gety() + l][j.getx()] is None:
                 possiblemovements.append((j.getx(), j.gety() + l))
-                print("Pawn can move from", self.letterconversion[j.getx()], j.gety(), "to: ",
-                      self.letterconversion[j.getx()], j.gety() + l)
-                if j.getfirstmove() and playb[j.gety() + k][j.getx()] is None and 0 <= j.gety() + k <= 7:
-                    possiblemovements.append((j.getx(), j.gety() + k))
-                    print("Pawn can move from", self.letterconversion[j.getx()], j.gety(), "to: ",
-                          self.letterconversion[j.getx()], j.gety() + k)
+                print("Pawn can move from", Chess.LETTERCONVERSION[j.getx()], j.gety(), "to: ",
+                      Chess.LETTERCONVERSION[j.getx()], j.gety() + l)
+                if j.getfirstmove() and 0 <= j.gety() + k <= 7:
+                    if playb[j.gety() + k][j.getx()] is None:
+                        possiblemovements.append((j.getx(), j.gety() + k))
+                        print("Pawn can move from", Chess.LETTERCONVERSION[j.getx()], j.gety(), "to: ",
+                              Chess.LETTERCONVERSION[j.getx()], j.gety() + k)
         for o in f:
             if 0 <= j.gety() + o[1] <= 7 and 0 <= j.getx() + o[0] <= 7:
-                if playb[j.gety() + o[1]][j.getx() + o[0]] is not None and playb[j.gety() + o[1]][
-                    j.getx() + o[0]].getcolor() is not self.shift:
-                    print("Pawn located in ", self.letterconversion[j.getx()], j.gety(), " can eat ",
-                          self.letterconversion[j.getx() + o[0]], j.gety() + o[1])
-                    possiblemovements.append((j.getx() + o[0], j.gety() + o[1]))
+                if playb[j.gety() + o[1]][j.getx() + o[0]] is not None:
+                    if playb[j.gety() + o[1]][j.getx() + o[0]].getcolor() is not self.shift:
+                        print("Pawn located in ", Chess.LETTERCONVERSION[j.getx()], j.gety(), " can eat ",
+                              Chess.LETTERCONVERSION[j.getx() + o[0]], j.gety() + o[1])
+                        possiblemovements.append((j.getx() + o[0], j.gety() + o[1]))
 
         return possiblemovements
 
-    def bishopmovement(self, j):
+    # returns the positions available for a Bishop
+    def bishopmovement(self, j: Bishop.Bishop):
         playb = self.table.getplayboard()
         bishopstatus = {0: False, 1: False, 2: False, 3: False}
         possiblemovements = []
@@ -81,13 +84,13 @@ class Chess:
                         else:
                             if playb[j.gety() + l][j.getx() + l].getcolor() != self.shift:
                                 possiblemovements.append((j.getx() + l, j.gety() + l))
-                                print("%s located in" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                                      " can eat ", self.letterconversion[j.getx() + l], j.gety() + l)
+                                print("%s located in" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                                      " can eat ", Chess.LETTERCONVERSION[j.getx() + l], j.gety() + l)
                             bishopstatus[k] = True
                             break
                 if steps > 0:
-                    print("%s can move from" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                          "to: ", self.letterconversion[j.getx() + steps], j.gety() + steps, " maximum")
+                    print("%s can move from" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                          "to: ", Chess.LETTERCONVERSION[j.getx() + steps], j.gety() + steps, " maximum")
 
             # NW
             if k == 1:
@@ -99,13 +102,13 @@ class Chess:
                         else:
                             if playb[j.gety() + l][j.getx() - l].getcolor() != self.shift:
                                 possiblemovements.append((j.getx() - l, j.gety() + l))
-                                print("%s located in" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                                      " can eat ", self.letterconversion[j.getx() - l], j.gety() + l)
+                                print("%s located in" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                                      " can eat ", Chess.LETTERCONVERSION[j.getx() - l], j.gety() + l)
                             bishopstatus[k] = True
                             break
                 if steps > 0:
-                    print("%s can move from" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                          "to: ", self.letterconversion[j.getx() - steps], j.gety() + steps, " maximum")
+                    print("%s can move from" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                          "to: ", Chess.LETTERCONVERSION[j.getx() - steps], j.gety() + steps, " maximum")
 
             # SW
             if k == 2:
@@ -117,13 +120,13 @@ class Chess:
                         else:
                             if playb[j.gety() - l][j.getx() - l].getcolor() != self.shift:
                                 possiblemovements.append((j.getx() - l, j.gety() - l))
-                                print("%s located in" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                                      " can eat ", self.letterconversion[j.getx() - l], j.gety() - l)
+                                print("%s located in" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                                      " can eat ", Chess.LETTERCONVERSION[j.getx() - l], j.gety() - l)
                             bishopstatus[k] = True
                             break
                 if steps > 0:
-                    print("%s can move from" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                          "to: ", self.letterconversion[j.getx() - steps], j.gety() - steps, " maximum")
+                    print("%s can move from" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                          "to: ", Chess.LETTERCONVERSION[j.getx() - steps], j.gety() - steps, " maximum")
 
             # SE
             if k == 3:
@@ -135,16 +138,17 @@ class Chess:
                         else:
                             if playb[j.gety() - l][j.getx() + l].getcolor() != self.shift:
                                 possiblemovements.append((j.getx() + l, j.gety() - l))
-                                print("%s located in" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                                      " can eat ", self.letterconversion[j.getx() + l], j.gety() - l)
+                                print("%s located in" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                                      " can eat ", Chess.LETTERCONVERSION[j.getx() + l], j.gety() - l)
                             bishopstatus[k] = True
                             break
                 if steps > 0:
-                    print("%s can move from" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                          "to: ", self.letterconversion[j.getx() + steps], j.gety() - steps, " maximum")
+                    print("%s can move from" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                          "to: ", Chess.LETTERCONVERSION[j.getx() + steps], j.gety() - steps, " maximum")
         return possiblemovements
 
-    def rookmovement(self, j):
+    # returns the positions available for a rook
+    def rookmovement(self, j: Rook.Rook):
         playb = self.table.getplayboard()
         rookstatus = {0: False, 1: False, 2: False, 3: False}
         possiblemovements = []
@@ -160,13 +164,13 @@ class Chess:
                         else:
                             if playb[j.gety() - l][j.getx()].getcolor() != self.shift:
                                 possiblemovements.append((j.getx(), j.gety() - l))
-                                print("%s located in" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                                      " can eat: ", self.letterconversion[j.getx()], j.gety() - l)
+                                print("%s located in" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                                      " can eat: ", Chess.LETTERCONVERSION[j.getx()], j.gety() - l)
                             rookstatus[k] = True
                             break
                 if steps > 0:
-                    print("%s can move from" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                          "to: ", self.letterconversion[j.getx()], j.gety() - steps, " maximum")
+                    print("%s can move from" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                          "to: ", Chess.LETTERCONVERSION[j.getx()], j.gety() - steps, " maximum")
             # forward
             if k == 1:
                 for l in range(1, 8):
@@ -177,13 +181,13 @@ class Chess:
                         else:
                             if playb[j.gety() + l][j.getx()].getcolor() != self.shift:
                                 possiblemovements.append((j.getx(), j.gety() + l))
-                                print("%s located in" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                                      " can eat: ", self.letterconversion[j.getx()], j.gety() + l)
+                                print("%s located in" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                                      " can eat: ", Chess.LETTERCONVERSION[j.getx()], j.gety() + l)
                             rookstatus[k] = True
                             break
                 if steps > 0:
-                    print("%s can move from" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                          "to: ", self.letterconversion[j.getx()], j.gety() + steps, " maximum")
+                    print("%s can move from" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                          "to: ", Chess.LETTERCONVERSION[j.getx()], j.gety() + steps, " maximum")
             # left
             if k == 2:
                 for l in range(1, 8):
@@ -194,13 +198,13 @@ class Chess:
                         else:
                             if playb[j.gety()][j.getx() - l].getcolor() != self.shift:
                                 possiblemovements.append((j.getx() - l, j.gety()))
-                                print("%s located in" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                                      " can eat: ", self.letterconversion[j.getx() - l], j.gety())
+                                print("%s located in" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                                      " can eat: ", Chess.LETTERCONVERSION[j.getx() - l], j.gety())
                             rookstatus[k] = True
                             break
                 if steps > 0:
-                    print("%s located in" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                          "to: ", self.letterconversion[j.getx() - steps], j.gety(), " maximum")
+                    print("%s located in" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                          "to: ", Chess.LETTERCONVERSION[j.getx() - steps], j.gety(), " maximum")
             # right
             if k == 3:
                 for l in range(1, 8):
@@ -211,16 +215,17 @@ class Chess:
                         else:
                             if playb[j.gety()][j.getx() + l].getcolor() != self.shift:
                                 possiblemovements.append((j.getx() + l, j.gety()))
-                                print("%s located in" % j.getname(), self.letterconversion[j.getx()], j.gety(),
+                                print("%s located in" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
                                       " can eat: ",
-                                      self.letterconversion[j.getx() + l], j.gety())
+                                      Chess.LETTERCONVERSION[j.getx() + l], j.gety())
                             rookstatus[k] = True
                             break
                 if steps > 0:
-                    print("%s can move from" % j.getname(), self.letterconversion[j.getx()], j.gety(),
-                          "to: ", self.letterconversion[j.getx() + steps], j.gety(), " maximum")
+                    print("%s can move from" % j.getname(), Chess.LETTERCONVERSION[j.getx()], j.gety(),
+                          "to: ", Chess.LETTERCONVERSION[j.getx() + steps], j.gety(), " maximum")
         return possiblemovements
 
+    # returns the positions available for a king
     def kingmovement(self, j):
         playb = self.table.getplayboard()
         possiblemovements = []
@@ -229,20 +234,20 @@ class Chess:
             if 0 <= j.gety() + l <= 7 and 0 <= j.getx() + k <= 7:
                 if playb[j.gety() + l][j.getx() + k] is None:
                     possiblemovements.append((j.getx() + k, j.gety() + l))
-                    print("King can move from", self.letterconversion[j.getx()], j.gety(), "to: ",
-                          self.letterconversion[j.getx() + k], j.gety() + l)
+                    print("King can move from", Chess.LETTERCONVERSION[j.getx()], j.gety(), "to: ",
+                          Chess.LETTERCONVERSION[j.getx() + k], j.gety() + l)
                 else:
                     if playb[j.gety() + l][j.getx() + k].getcolor() != self.shift:
                         possiblemovements.append((j.getx() + k, j.gety() + l))
-                        print("King located in ", self.letterconversion[j.getx()], j.gety(), " can eat: ",
-                              self.letterconversion[j.getx() + k], j.gety() + l)
+                        print("King located in ", Chess.LETTERCONVERSION[j.getx()], j.gety(), " can eat: ",
+                              Chess.LETTERCONVERSION[j.getx() + k], j.gety() + l)
         return possiblemovements
 
+    # returns the positions available for a queen
     def queenmovement(self, j):
-        l = self.rookmovement(j)
-        k = self.bishopmovement(j)
-        return l + k
+        return self.rookmovement(j) + self.bishopmovement(j)
 
+    # returns the positions available for a knight
     def knightmovement(self, j):
         playb = self.table.getplayboard()
         knightmovesxy = ((-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1))
@@ -251,35 +256,34 @@ class Chess:
             if 0 <= j.gety() + l <= 7 and 0 <= j.getx() + k <= 7:
                 if playb[j.gety() + l][j.getx() + k] is None:
                     possiblemovements.append((j.getx() + k, j.gety() + l))
-                    print("Knight can move from", self.letterconversion[j.getx()], j.gety(), "to: ",
-                          self.letterconversion[j.getx() + k], j.gety() + l)
+                    print("Knight can move from", Chess.LETTERCONVERSION[j.getx()], j.gety(), "to: ",
+                          Chess.LETTERCONVERSION[j.getx() + k], j.gety() + l)
                 else:
                     if playb[j.gety() + l][j.getx() + k].getcolor() != self.shift:
                         possiblemovements.append((j.getx() + k, j.gety() + l))
-                        print("Knight located in", self.letterconversion[j.getx()], j.gety(), " can eat: ",
-                              self.letterconversion[j.getx() + k], j.gety() + l)
+                        print("Knight located in", Chess.LETTERCONVERSION[j.getx()], j.gety(), " can eat: ",
+                              Chess.LETTERCONVERSION[j.getx() + k], j.gety() + l)
         return possiblemovements
 
+    # moves a piece in xy position
     def movepiece(self, piece, x, y):
         delete = False
-        try:
-            if self.table.getplayboard()[y][x] is not None:
-                delete = True
-                if piece.getcolor() == "White":
-                    info = self.table.getblackpieces()
-                    self.table.getblackdeadpieces().append(self.table.getplayboard()[y][x])
-                else:
-                    info = self.table.getwhitepieces()
-                    self.table.getwhitedeadpieces().append(self.table.getplayboard()[y][x])
-                for i in range(0, len(info)):
-                    if info[i].getid() == self.table.getplayboard()[y][x].getid():
-                        info.pop(i)
-                        break
-            self.table.updatepiece(piece, x, y)
-            return delete
-        except:
-            print("ERROR")
+        if self.table.getplayboard()[y][x] is not None:
+            delete = True
+            if piece.getcolor() == "White":
+                info = self.table.getblackpieces()
+                self.table.getblackdeadpieces().append(self.table.getplayboard()[y][x])
+            else:
+                info = self.table.getwhitepieces()
+                self.table.getwhitedeadpieces().append(self.table.getplayboard()[y][x])
+            for i in range(0, len(info)):
+                if info[i].getid() == self.table.getplayboard()[y][x].getid():
+                    info.pop(i)
+                    break
+        self.table.updatepiece(piece, x, y)
+        return delete
 
+    # returns if the pawn has reached the final
     @staticmethod
     def pawnfinal(piece):
         if (piece.gety() == 7 or piece.gety() == 0) and piece.getname() == "Pawn":
@@ -287,12 +291,17 @@ class Chess:
         else:
             return False
 
+    # if there can be castling it changes the king and tower postions
     def castling(self, piece):
         if piece.getname() == "Rook" and piece.getfirstmove():
             if self.shift == "White":
-                king = self.table.getpieceid(4)
+                info = self.table.getwhitepieces()
             else:
-                king = self.table.getpieceid(27)
+                info = self.table.getblackpieces()
+            king = None
+            for i in info:
+                if i.getname() == "King":
+                    king = i
             if piece.getx() == king.getx() - 1 and king.getfirstmove():
                 if self.table.getplayboard()[king.gety()][king.getx() - 2] is None:
                     self.table.updatepiece(king, king.getx() - 2, king.gety())
@@ -302,6 +311,7 @@ class Chess:
                     self.table.updatepiece(king, king.getx() + 2, king.gety())
                     king.setfirstmove()
 
+    # returns the possible movements of a piece
     def checkmovements(self, j):
         if j.getname() is "Knight":
             return self.knightmovement(j)
@@ -316,6 +326,7 @@ class Chess:
         elif j.getname() is "Rook":
             return self.rookmovement(j)
 
+    # transform a piece into another
     def promotioned(self, piece, l):
         position = None
         if piece.getcolor() == "White":
@@ -340,9 +351,9 @@ class Chess:
             self.table.updatepiece(info[position], info[position].getx(), info[position].gety())
         else:
             return None
-        print(info)
         return k
 
+    # checks if the king has been eaten
     def checkwinner(self):
         for i in self.table.getwhitedeadpieces():
             if i.getname() == "King":
@@ -353,50 +364,6 @@ class Chess:
                 self.finish = True
                 self.winner = self.player1
 
+    # change the shift color
     def changecolor(self):
-        if self.shift is "White":
-            self.shift = "Black"
-        else:
-            self.shift = "White"
-
-    # special function to make automatic movements
-    # def automatico(self):
-    #  lista = (
-    #     ((4, 2), (4, 4)),
-    #     ((4, 7), (4, 5)),
-    #     ((5, 2), (5, 4)),
-    #     ((4, 5), (5, 4)),
-    #     ((6, 1), (5, 3)),
-    #     ((6, 7), (6, 5)),
-    #     ((5, 1), (2, 4)),
-    #     ((6, 5), (6, 4)),
-    #     ((3, 2), (3, 4)),
-    #     ((6, 4), (5, 3)),
-    #     ((3, 1), (5, 3)),
-    #     ((5, 8), (7, 6)),
-    # )
-    # lista2 = (
-    #     ((0, 2), (0, 4)),
-    #     ((6, 8), (5, 6)),
-    #     ((0, 4), (0, 5)),
-    #     ((5, 6), (6, 4)),
-    #     ((0, 5), (0, 6)),
-    #     ((6, 4), (7, 2)),
-    #     ((0, 6), (1, 7)),
-    #     ((7, 2), (5, 1)),
-    #     ((1, 7), (2, 8)),
-    #     ((5, 1), (3, 2)),
-    # )
-    # lista3 = (
-    #     ((0, 7), (0, 5)),
-    #     ((6, 1), (5, 3)),
-    #     ((0, 5), (0, 4)),
-    #     ((5, 3), (6, 5)),
-    #     ((0, 4), (0, 3)),
-    #     ((6, 5), (7, 7)),
-    #     ((0, 3), (1, 2)),
-    #     ((7, 7), (5, 8)),
-    #     ((1, 2), (2, 1)),
-    #     ((5, 8), (3, 7)),
-    # )
-    # A=0 B=1 C=2 D=3 E=4 F=5 G=6 H=7
+        self.shift = "Black" if self.shift is "White" else "White"

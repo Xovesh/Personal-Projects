@@ -19,11 +19,12 @@ class App:
                    "Bishop": "Icons/BlackBishop.png", "King": "Icons/BlackKing.png",
                    "Knight": "Icons/BlackKnight.png", "Queen": "Icons/BlackQueen.png"}
 
+    # constructor
     def __init__(self):
         self.chess = Game.Chess()
         self.root = Tk()
         self.root.protocol("WM_DELETE_WINDOW", self.close)
-        self.root.geometry("920x750")
+        self.root.geometry("920x740")
         self.root.iconbitmap('icon.ico')
         self.root.resizable(0, 0)
         self.root.title("Classic Chess")
@@ -38,28 +39,31 @@ class App:
         self.table()
         mainloop()
 
+    # starts the game
     def start(self):
         self.startbutton.config(state=DISABLED, text="The game Started!")
         self.pieces()
         self.visualizepieces()
         self.chess.starttime()
+        shift = "White"
         while not self.chess.finish:
-            if self.chess.shift == "White":
-                while self.chess.shift == "White":
-                    self.time()
-                    self.root.update()
+            while self.chess.shift == shift:
+                self.time()
+                self.root.update()
+            if shift == "White":
+                shift = "Black"
             else:
-                while self.chess.shift == "Black":
-                    self.time()
-                    self.root.update()
+                shift = "White"
             self.chess.checkwinner()
             self.visualizepieces()
         messagebox.showinfo("Classic Chess", "Game Finished, the winner is " + self.chess.winner[0])
         self.root.destroy()
 
+    # time update
     def time(self):
         self.label3.config(text="Time: " + str(int(time.time() - self.chess.gettime())) + "s")
 
+    # give to each piece a button
     def pieces(self):
         for j in self.chess.table.getpieces():
             if j.getcolor() == "White":
@@ -70,61 +74,71 @@ class App:
                                                     command=lambda piece=j: self.movements(piece), image=img, bg="#E6E6E6")
             self.piecesposition[j.getid()].image = img
 
+    # creates the buttons to move
     def movements(self, piece):
         self.clearmovements()
         self.lastmovements.clear()
-        print(piece.getid(), piece.getcolor())
-        print(self.chess.checkmovements(piece))
         for i in self.chess.checkmovements(piece):
             self.lastmovements.append(Button(self.game, text="Move Here", command=lambda x=i[0], y=i[1]: self.move(piece, x, y), relief=FLAT))
             self.lastmovements[-1].grid(row=9 - i[1] - 2, column=i[0])
 
+    # destroys the buttons
     def clearmovements(self):
         for l in self.lastmovements:
             l.destroy()
 
+    # checks executed when moving a piece
+    def checks(self, piece):
+        if self.chess.pawnfinal(piece):
+            self.promotion(piece)
+        self.chess.castling(piece)
+        piece.setfirstmove()
+
+    # piece eaten
+    def delete(self, x, y):
+        if self.chess.shift == "White":
+            k = (self.chess.table.getwhitedeadpieces(), self.deadwhite)
+        else:
+            k = (self.chess.table.getblackdeadpieces(), self.deadblack)
+        j = len(k[0])
+        if j > 12:
+            l = 3
+            j = j - 12
+        elif j > 8:
+            l = 2
+            j = j - 8
+        elif j > 4:
+            l = 1
+            j = j - 4
+        else:
+            l = 0
+        self.piecesposition[k[0][-1].getid()].destroy()
+        self.piecesposition[k[0][-1].getid()] = Button(k[1], text=k[0][-1].getname(), state=DISABLED).grid(row=l, column=j)
+
+    # move a piece
     def move(self, piece, x, y):
         s = self.chess.movepiece(piece, x, y)
         self.clearmovements()
-        if self.chess.pawnfinal(piece):
-            self.promotion(piece)
-        if self.chess.castling(piece):
-            pass
+        self.checks(piece)
         self.chess.changecolor()
-        if piece.getfirstmove():
-            piece.setfirstmove()
         if s:
-            if self.chess.shift == "White":
-                k = (self.chess.table.getwhitedeadpieces(), self.deadwhite)
-            else:
-                k = (self.chess.table.getblackdeadpieces(), self.deadblack)
-            for i in k[0]:
-                j = len(k[0])
-                if j > 12:
-                    l = 3
-                    j = j-12
-                elif j > 8:
-                    l = 2
-                    j = j-8
-                elif j > 4:
-                    l = 1
-                    j = j-4
-                else:
-                    l = 0
-                if i.getx() == x and i.gety() == y:
-                    self.piecesposition[i.getid()].destroy()
-                    self.piecesposition[i.getid()] = Button(k[1], text=i.getname(), state=DISABLED).grid(row=l, column=j)
+            self.delete(x, y)
         self.chess.table.visualize()
 
+    # you cant close the promotion window
     def noclosing(self):
         pass
 
+    # Close main window
     def close(self):
         messagebox.showinfo("Classic Chess", "Thanks for Playing")
         self.root.destroy()
 
+    # pawn promotion window
     def promotion(self, piece):
         self.top = Toplevel(self.root, height=100, width=100)
+        self.root.protocol("WM_DELETE_WINDOW", self.noclosing)
+        self.top.protocol("WM_DELETE_WINDOW", self.noclosing)
         Label(self.top, text="Pawn promotion ", width=20, height=4).grid(row=0, column=1)
         Label(self.top, text="Select One", width=20, height=4).grid(row=0, column=2)
         Button(self.top, text="Bishop", command=lambda l="Bishop": self.proselect(piece, l), width=20, height=4).grid(row=1, column=0)
@@ -134,17 +148,20 @@ class App:
         self.visualizepieces(arg="disabled")
         self.root.wait_window(self.top)
 
+    # pawn transformation
     def proselect(self, piece, l):
         j = self.chess.promotioned(piece, l)
         self.piecesposition[piece.getid()].destroy()
-        if piece.getcolor() == "White":
+        if j.getcolor() == "White":
             img = ImageTk.PhotoImage(Image.open(App.IMAGESWHITE[j.getname()]).convert("RGBA"))
         else:
             img = ImageTk.PhotoImage(Image.open(App.IMAGESBLACK[j.getname()]).convert("RGBA"))
-        self.piecesposition[piece.getid()] = Button(self.game, text=j.getname() + "\n" + j.getcolor(), relief=FLAT, command=lambda: self.movements(j), image=img, bg="#E6E6E6")
-        self.piecesposition[piece.getid()].image = img
+        self.piecesposition[j.getid()] = Button(self.game, text=j.getname() + "\n" + j.getcolor(), relief=FLAT, command=lambda: self.movements(j), image=img, bg="#E6E6E6")
+        self.piecesposition[j.getid()].image = img
+        self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.top.destroy()
 
+    # visualizes the pieces in the table
     def visualizepieces(self, arg="normal"):
         for r in self.chess.table.getpieces():
             if self.chess.shift != r.getcolor():
@@ -153,6 +170,7 @@ class App:
                 self.piecesposition[r.getid()].config(state=arg)
             self.piecesposition[r.getid()].grid(row=9 - r.gety() - 2, column=r.getx())
 
+    # creates the canvas for the playground
     def gametable(self):
         for i in range(0, 8):
             if i % 2 == 0:
@@ -167,6 +185,7 @@ class App:
                 Canvas(self.game, width=80, height=80, bg=color).grid(row=i, column=j)
         self.game.grid(row=0, column=1)
 
+    # creates the full table
     def table(self):
         letters = "ABCDEFGH"
         font1 = Font(family="Times New Roman", size=20)
