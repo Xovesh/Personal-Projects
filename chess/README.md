@@ -1,7 +1,6 @@
 Unfinished things:
 - Check / Checkmate alerts
 
-Future improvements
-- Colors Update
+You can play with without the features that above mentioned.
 
-You can play with without the features that are above
+NOTE: The white pieces are a little bit confusing
