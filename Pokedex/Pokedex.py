@@ -1,13 +1,12 @@
-from Pokemon import Pokemon
+from pokedex.Pokemon import Pokemon
 import sqlite3
-from DownloadInfo import DownloadInfo
+from pokedex.DownloadInfo import DownloadInfo
 
 
-# noinspection PyBroadException
 class Pokedex:
     MAX_POKEMON = 806
 
-    # Pokedex constructor
+    # pokedex constructor
     def __init__(self):
         self.listpokedex = []
         self.boot()

@@ -1,11 +1,8 @@
 import os
 import sqlite3
-from Pokemon import Pokemon
+from pokedex.Pokemon import Pokemon
 from bs4 import BeautifulSoup
 from urllib import request
-
-
-# noinspection PyBroadException
 
 
 class DownloadInfo:

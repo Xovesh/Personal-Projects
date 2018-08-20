@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from Pokedex import Pokedex
+from pokedex.Pokedex import Pokedex
 
 
 class Application:
@@ -11,7 +11,7 @@ class Application:
         self.root = Tk()
         self.root.geometry("700x500")
         self.root.resizable(0, 0)
-        self.root.title("Pokedex")
+        self.root.title("pokedex")
 
         self.screen = ttk.Frame(self.root)
         try:
@@ -19,7 +19,7 @@ class Application:
         except:
             self.image1 = PhotoImage(file="pokemonpictures/error.png")
         self.label = ttk.Label(self.screen, image=self.image1, anchor="center")
-        self.label2 = ttk.Label(self.screen, text="Welcome to the National Pokedex, the pokedex where you are going to "
+        self.label2 = ttk.Label(self.screen, text="Welcome to the National pokedex, the pokedex where you are going to "
                                                   "find all the pokemons")
         self.label3 = ttk.Label(self.screen, text="and their stats, feel free to use it whenever you need it")
         self.label.pack(side=TOP, pady=10)
@@ -114,7 +114,6 @@ class Application:
             infoframe.grid(column=1, row=0, sticky=(N, S, E))
 
 
-# noinspection PyCallingNonCallable
 poke = Pokedex()
 
 j = Application(poke)
