@@ -1,7 +1,7 @@
 # Small-Projects
 Small projects using mainly python
 
-__Pokedex__: Simple Pokedex with an Interactive GUI. Finalized: 31/05/2018
+__Pokedex__: Simple Pokedex with an Interactive GUI.
 
 __Webpage__: Creating a webpage using DJango Framework.
 
@@ -9,6 +9,8 @@ __Webpage__: Creating a webpage using DJango Framework.
 ![Screenshot](githubpictures/webpokedex1.PNG)
 ![Screenshot](githubpictures/webpokedex2.PNG)
 
-__Chess__: Basic GUI based chess
+__Chess__: Basic GUI based chess.
+![Screenshot](githubpictures/chess.PNG)
+
 Future projects:
 - Sudoku
