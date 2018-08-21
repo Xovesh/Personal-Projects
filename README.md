@@ -2,6 +2,8 @@
 Small projects using mainly python
 
 __Pokedex__: Simple Pokedex with an Interactive GUI.
+![Screenshot](githubpictures/pokedex1.PNG)
+![Screenshot](githubpictures/pokedex2.PNG)
 
 __Webpage__: Creating a webpage using DJango Framework.
 
