@@ -1,3 +1,5 @@
+# Website using Django
+
 I don't own Django, this was use for learning purpose
 
 __Note__: Myfirstapp refers to Pokedex
