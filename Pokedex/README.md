@@ -4,4 +4,5 @@ This is an interactive GUI Pokedex that uses all my actuals knowlegde about pyth
 
 To run up the program run __main.py__ file
 
+Using the script PokedexDB you can download all the pictures and db automatically. It takes 20 minutes.
 
