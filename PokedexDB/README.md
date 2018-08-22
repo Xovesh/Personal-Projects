@@ -8,6 +8,8 @@ https://pokemondb.net/
 
 https://www.pokemon.com/uk
 
+It took me to download all data 20 minutes.
+
 -----------------------------
 
 You need to have installed BeautifulSoup4
