@@ -1,6 +1,5 @@
 from pokedex.Pokemon import Pokemon
 import sqlite3
-from pokedex.DownloadInfo import DownloadInfo
 
 
 class Pokedex:
@@ -33,7 +32,6 @@ class Pokedex:
 
     # to boot the pokedex data
     def boot(self):
-        DownloadInfo(Pokedex.MAX_POKEMON)
         self.readpokemondb()
 
     # reads the pokemon database and include all of them in the pokedex

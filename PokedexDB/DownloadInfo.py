@@ -3,7 +3,7 @@ import sqlite3
 from pokedex.Pokemon import Pokemon
 from bs4 import BeautifulSoup
 from urllib import request
-
+import time
 
 class DownloadInfo:
     # Main variables
@@ -24,10 +24,12 @@ class DownloadInfo:
     @staticmethod
     # To download and check all images
     def boot():
+        k = time.time()
         DownloadInfo.check_directory()
         DownloadInfo.check_images()
         DownloadInfo.checklinkspath()
         DownloadInfo.checkpokemoninfo()
+        print("Total time spended: " + str(time.time()-k))
 
     @staticmethod
     # Checks if the folders exists
@@ -101,26 +103,26 @@ class DownloadInfo:
             html = response.read()  # The data u need
 
             soup = BeautifulSoup(html, "html.parser")
-            table = soup.find("div", attrs={'class': 'infocard-tall-list'})
-
+            table = soup.find_all("div", attrs={'class': 'infocard-list infocard-list-pkmn-lg'})
             e = 1
             linkin = True
-            for link in table.find_all("a"):
-                a = link.get("href")
-                if "/pokedex/" in a:
-                    if linkin:
-                        conn = sqlite3.connect(DownloadInfo.DIRECTORY2 + DownloadInfo.FILE1)
-                        c = conn.cursor()
-                        print(a)
-                        pokemoninfo = [e, a]
-                        pokemoninfo = tuple(pokemoninfo)
-                        c.execute('''INSERT INTO Pokedexlink(number,link) VALUES (?,?)''', pokemoninfo)
-                        e += 1
-                        conn.commit()
-                        conn.close()
-                        linkin = False
-                    else:
-                        linkin = True
+            for i in table:
+                for link in i.find_all("a"):
+                    a = link.get("href")
+                    if "/pokedex/" in a:
+                        if linkin:
+                            conn = sqlite3.connect(DownloadInfo.DIRECTORY2 + DownloadInfo.FILE1)
+                            c = conn.cursor()
+                            print(e, a)
+                            pokemoninfo = [e, a]
+                            pokemoninfo = tuple(pokemoninfo)
+                            c.execute('''INSERT INTO Pokedexlink(number,link) VALUES (?,?)''', pokemoninfo)
+                            e += 1
+                            conn.commit()
+                            conn.close()
+                            linkin = False
+                        else:
+                            linkin = True
         except:
             print("Error downloading linkspaths")
 
@@ -234,15 +236,14 @@ class DownloadInfo:
             html2 = response2.read()
             soup2 = BeautifulSoup(html2, "html.parser")
             # statsdata
-            table2 = soup2.find("div", attrs={'class': 'col desk-span-8 lap-span-12'})
+            table2 = soup2.find("div", attrs={'class': 'grid-col span-md-12 span-lg-8'})
             values2 = table2.find("tbody")
-            stats = values2.find_all("td", attrs={'class': 'num'})
+            stats = values2.find_all("td", attrs={'class': 'cell-num'})
             for k in range(0, len(stats), 3):
                 pokemoninfo.append(int(stats[k].get_text()))
 
-            pokemoninfo.append("False")
+            pokemoninfo.append("True")
             s += 1
-
             pokemoninfo = tuple(pokemoninfo)
             c.execute('''INSERT INTO Pokedex(number,name, height, weigth, gender, category, abilities, ptype, 
                                       weakness,hp, attack, defense, special_attack, special_defense, speed, 
@@ -255,3 +256,6 @@ class DownloadInfo:
         except:
             print("Error, we cant connect with the database Pokemon ID: %i" % s)
         conn.close()
+
+
+DownloadInfo(806)
