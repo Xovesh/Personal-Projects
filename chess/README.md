@@ -5,4 +5,4 @@ You can play with without the features that above mentioned.
 
 NOTE: The white pieces are a little bit confusing
 
-To play run __main.py__ 
+To run up the program run main.py file
