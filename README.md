@@ -3,6 +3,7 @@ Small projects using mainly python
 
 __Pokedex__: Simple Pokedex with an Interactive GUI.
 - PokemonDB is a side project to retrieve pictures and data
+
 ![Screenshot](githubpictures/pokedex1.PNG)
 ![Screenshot](githubpictures/pokedex2.PNG)
 
