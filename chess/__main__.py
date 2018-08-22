@@ -95,7 +95,7 @@ class App:
         piece.setfirstmove()
 
     # piece eaten
-    def delete(self, x, y):
+    def delete(self):
         if self.chess.shift == "White":
             k = (self.chess.table.getwhitedeadpieces(), self.deadwhite)
         else:
@@ -122,7 +122,7 @@ class App:
         self.checks(piece)
         self.chess.changecolor()
         if s:
-            self.delete(x, y)
+            self.delete()
         self.chess.table.visualize()
 
     # you cant close the promotion window
