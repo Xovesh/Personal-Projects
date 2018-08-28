@@ -29,15 +29,6 @@ class Chess:
         self.player2 = ("Player 2", "Black")
         self.winner = None
         self.finish = False
-        self.time = None
-
-    # starts the timer
-    def starttime(self):
-        self.time = time.time()
-
-    # returns the time
-    def gettime(self):
-        return self.time
 
     # returns the positions available for a pawn
     def pawnmovement(self, j: Pawn.Pawn):

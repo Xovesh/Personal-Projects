@@ -28,6 +28,7 @@ class App:
         self.root.iconbitmap('icon.ico')
         self.root.resizable(0, 0)
         self.root.title("Classic Chess")
+        self.timer = None
 
         self.left = Frame(self.root)
         self.bottom = Frame(self.root)
@@ -44,7 +45,7 @@ class App:
         self.startbutton.config(state=DISABLED, text="The game Started!")
         self.pieces()
         self.visualizepieces()
-        self.chess.starttime()
+        self.starttime()
         shift = "White"
         while not self.chess.finish:
             while self.chess.shift == shift:
@@ -61,7 +62,11 @@ class App:
 
     # time update
     def time(self):
-        self.label3.config(text="Time: " + str(int(time.time() - self.chess.gettime())) + "s")
+        self.label3.config(text="Time: " + str(int(time.time() - self.timer)) + "s")
+
+    # time start
+    def starttime(self):
+        self.timer = time.time()
 
     # give to each piece a button
     def pieces(self):
