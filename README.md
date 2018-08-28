@@ -29,6 +29,6 @@ __Sudoku__: Sudoku game with GUI.
   
   I need an App to read them.
   
-  Uhm, they have ads
+  Uhm, Ads and to many permissions, dont like it.
   
   __Let's create Free ads PDF reader__
