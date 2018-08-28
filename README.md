@@ -1,5 +1,3 @@
-# Small-Projects
-
 # Finished projects
 
 __Pokedex__: Simple Pokedex with an Interactive GUI.
@@ -34,6 +32,3 @@ __Sudoku__: Sudoku game with GUI.
   Uhm, they have ads
   
   __Let's create Free ads PDF reader__
-  
-  
- 
