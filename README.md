@@ -24,8 +24,12 @@ __Sudoku__: Sudoku game with GUI.
 Future projects:
 - HTML parser
 - I like japanese light novels. 
+
   I want to read them at university while waiting to start the lesson. 
+  
   I need an App to read them.
+  
   Uhm, they have ads
+  
   Let's create Free ads App
  
