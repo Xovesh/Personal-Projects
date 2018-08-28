@@ -13,9 +13,13 @@ __Webpage__: Creating a webpage using DJango Framework.
 ![Screenshot](githubpictures/webpokedex1.PNG)
 ![Screenshot](githubpictures/webpokedex2.PNG)
 
-__Chess__: Basic GUI based chess.
+__Chess__: Chess game with GUI.
 ![Screenshot](githubpictures/chess.PNG)
 
+Working projects:
+
+__Sudoku__: Sudoku game with GUI.
+![Screenshot](githubpictures/Sudoku1.PNG)
+
 Future projects:
-- Sudoku
 - HTML parser
