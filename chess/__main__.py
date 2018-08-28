@@ -76,7 +76,7 @@ class App:
             else:
                 img = ImageTk.PhotoImage(Image.open(App.IMAGESBLACK[j.getname()]).convert("RGBA"))
             self.piecesposition[j.getid()] = Button(self.game, text=j.getname() + "\n" + j.getcolor(), relief=FLAT,
-                                                    command=lambda piece=j: self.movements(piece), image=img, bg="#E6E6E6")
+                                                    command=lambda piece=j: self.movements(piece), image=img)
             self.piecesposition[j.getid()].image = img
 
     # creates the buttons to move
@@ -161,7 +161,7 @@ class App:
             img = ImageTk.PhotoImage(Image.open(App.IMAGESWHITE[j.getname()]).convert("RGBA"))
         else:
             img = ImageTk.PhotoImage(Image.open(App.IMAGESBLACK[j.getname()]).convert("RGBA"))
-        self.piecesposition[j.getid()] = Button(self.game, text=j.getname() + "\n" + j.getcolor(), relief=FLAT, command=lambda: self.movements(j), image=img, bg="#E6E6E6")
+        self.piecesposition[j.getid()] = Button(self.game, text=j.getname() + "\n" + j.getcolor(), relief=FLAT, command=lambda: self.movements(j), image=img)
         self.piecesposition[j.getid()].image = img
         self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.top.destroy()
@@ -173,21 +173,30 @@ class App:
                 self.piecesposition[r.getid()].config(state=DISABLED)
             else:
                 self.piecesposition[r.getid()].config(state=arg)
+            if r.getx() % 2 == 0:
+                colors = ("#996600", "#ffcc00")
+            else:
+                colors = ("#ffcc00", "#996600")
+            if r.gety() % 2 != 0:
+                color = colors[1]
+            else:
+                color = colors[0]
+            self.piecesposition[r.getid()].config(bg=color, activebackground=color, disabledforeground=color)
             self.piecesposition[r.getid()].grid(row=9 - r.gety() - 2, column=r.getx())
 
     # creates the canvas for the playground
     def gametable(self):
         for i in range(0, 8):
             if i % 2 == 0:
-                colors = ("white", "black")
+                colors = ("#996600", "#ffcc00")
             else:
-                colors = ("black", "white")
+                colors = ("#ffcc00", "#996600")
             for j in range(0, 8):
                 if j % 2 != 0:
                     color = colors[0]
                 else:
                     color = colors[1]
-                Canvas(self.game, width=80, height=80, bg=color).grid(row=i, column=j)
+                Canvas(self.game, width=80, height=80, bg=color, highlightbackground="black").grid(row=i, column=j)
         self.game.grid(row=0, column=1)
 
     # creates the full table
