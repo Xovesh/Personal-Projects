@@ -22,7 +22,7 @@ __Sudoku__: Sudoku game with GUI.
 ![Screenshot](githubpictures/sudoku1.PNG)
 
 Future projects:
-- HTML parser
+- __HTML parser__
 - I like japanese light novels. 
 
   I want to read them at university while waiting to start the lesson. 
@@ -31,5 +31,7 @@ Future projects:
   
   Uhm, they have ads
   
-  Let's create Free ads App
+  __Let's create Free ads PDF reader__
+  
+  
  
