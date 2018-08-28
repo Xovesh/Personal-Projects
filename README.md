@@ -19,7 +19,7 @@ __Chess__: Chess game with GUI.
 Working projects:
 
 __Sudoku__: Sudoku game with GUI.
-![Screenshot](githubpictures/Sudoku1.PNG)
+![Screenshot](githubpictures/sudoku1.PNG)
 
 Future projects:
 - HTML parser
