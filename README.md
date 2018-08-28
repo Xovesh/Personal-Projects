@@ -13,7 +13,7 @@ __Webpage__: Creating a webpage using DJango Framework.
 ![Screenshot](githubpictures/webpokedex2.PNG)
 
 __Chess__: Chess game with GUI.
-![Screenshot](githubpictures/chess.PNG)
+![Screenshot](githubpictures/chess1.PNG)
 
 # Working projects
 
