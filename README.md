@@ -1,5 +1,4 @@
-# Small-Projects
-Small projects using mainly python
+# Finished projects
 
 __Pokedex__: Simple Pokedex with an Interactive GUI.
 - PokedexDB is a side project to retrieve pictures and data
@@ -16,12 +15,13 @@ __Webpage__: Creating a webpage using DJango Framework.
 __Chess__: Chess game with GUI.
 ![Screenshot](githubpictures/chess.PNG)
 
-Working projects:
+# Working projects
 
 __Sudoku__: Sudoku game with GUI.
 ![Screenshot](githubpictures/sudoku1.PNG)
 
-Future projects:
+# Future projects
+
 - __HTML parser__
 - I like japanese light novels. 
 
@@ -32,6 +32,3 @@ Future projects:
   Uhm, they have ads
   
   __Let's create Free ads PDF reader__
-  
-  
- 
