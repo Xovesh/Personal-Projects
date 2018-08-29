@@ -13,7 +13,7 @@ __Webpage__: Creating a webpage using DJango Framework.
 ![Screenshot](githubpictures/webpokedex2.PNG)
 
 __Chess__: Chess game with GUI.
-![Screenshot](githubpictures/chess.PNG)
+![Screenshot](githubpictures/chess1.PNG)
 
 # Working projects
 
@@ -29,6 +29,6 @@ __Sudoku__: Sudoku game with GUI.
   
   I need an App to read them.
   
-  Uhm, they have ads
+  Uhm, Ads and to many permissions, dont like it.
   
   __Let's create Free ads PDF reader__
