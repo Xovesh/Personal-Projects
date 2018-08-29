@@ -13,7 +13,6 @@ It took me to download all data 15 minutes.
 -----------------------------
 
 You need to have installed BeautifulSoup4
-
-Last time tried to retrieve data 8/22/2018
+Last time tried to retrieve data 8/29/2018
                                                                                    
 

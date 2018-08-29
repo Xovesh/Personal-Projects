@@ -2,40 +2,21 @@ from sudoku import Sudoku
 
 
 class SudokuGame:
-    SUDOKU1 = [[0, 0, 2, 6, 0, 0, 0, 8, 0],
-               [0, 0, 0, 8, 9, 0, 0, 4, 5],
-               [0, 8, 0, 3, 4, 0, 0, 6, 0],
-               [0, 0, 6, 0, 3, 5, 0, 0, 0],
-               [8, 0, 0, 0, 0, 6, 0, 0, 7],
-               [5, 4, 0, 0, 0, 0, 0, 0, 0],
-               [0, 7, 8, 5, 2, 0, 0, 0, 4],
-               [0, 5, 0, 9, 0, 4, 0, 0, 0],
-               [6, 0, 0, 0, 7, 8, 0, 2, 0]]
-
-    # for checking purpose
-
-    SUDOKU2 = [[4, 1, 2, 6, 5, 7, 3, 8, 9],
-               [3, 6, 7, 8, 9, 2, 1, 4, 5],
-               [9, 8, 5, 3, 4, 1, 7, 6, 2],
-               [7, 2, 6, 4, 3, 5, 9, 1, 8],
-               [8, 3, 9, 2, 1, 6, 4, 5, 7],
-               [5, 4, 1, 7, 8, 9, 2, 3, 6],
-               [1, 7, 8, 5, 2, 3, 6, 9, 4],
-               [2, 5, 3, 9, 6, 4, 8, 7, 1],
-               [6, 9, 4, 1, 7, 8, 5, 2, 0]]
-
-    def __init__(self):
+    def __init__(self, n):
         self.table = Sudoku.Sudoku()
         self.finish = False
         self.gamenumbers = []
-        self.initialize()
+        self.initialize(n)
         self.table.visualize()
 
-    def initialize(self):
-        self.table.board = SudokuGame.SUDOKU1
+    def visualize(self):
+        self.table.visualize()
+
+    def initialize(self, n):
+        self.table.board = n
         for i in range(0, 9):
             for j in range(0, 9):
-                if SudokuGame.SUDOKU1[i][j] == 0:
+                if n[i][j] == 0:
                     self.gamenumbers.append((j, i))
 
     def getfinish(self):
@@ -43,6 +24,9 @@ class SudokuGame:
 
     def setfinish(self):
         self.finish = True
+
+    def getgamenumbers(self):
+        return self.gamenumbers
 
     def checkcolumn(self, x, y):
         for i in range(0, 9):
