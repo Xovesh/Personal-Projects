@@ -48,8 +48,6 @@ class App:
         self.checkbutton = Button(self.right, text="Check Sudoku", state=DISABLED, width=20, height=4)
         self.checkbutton.grid(row=2, column=0, pady=10)
 
-        self.randomgeneratorbutton = Button(self.right, text="Generate Random", width=20, height=4)
-        self.randomgeneratorbutton.grid(row=4, column=0, pady=10)
         # sudoku list viewer
 
         self.listsudoku = ttk.Frame(self.right)
