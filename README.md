@@ -22,7 +22,7 @@ __Sudoku__:
 ![Screenshot](githubpictures/sudoku3.PNG)
 ![Screenshot](githubpictures/sudoku4.PNG)
 
-- Sudoku creator wit GUI
+- Sudoku creator with GUI
 ![Screenshot](githubpictures/sudoku2.PNG)
 
 # Future projects
