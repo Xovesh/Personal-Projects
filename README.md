@@ -19,7 +19,7 @@ __Chess__: Chess game with GUI.
 
 __Sudoku__: 
 - Sudoku game with GUI.
-![Screenshot](githubpictures/sudoku1.PNG)
+![Screenshot](githubpictures/sudoku3.PNG)
 ![Screenshot](githubpictures/sudoku4.PNG)
 
 - Sudoku creator with GUI
