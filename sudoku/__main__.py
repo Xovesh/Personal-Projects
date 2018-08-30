@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter.font import Font
 from tkinter import messagebox
 import time
-from sudoku import Game, createsudoku
+from sudoku import Game, sudokucreator
 
 
 class App:
@@ -17,6 +17,7 @@ class App:
         self.root.geometry("930x757")
         self.root.resizable(0, 0)
         self.root.title("Sudoku")
+        self.root.iconbitmap('icon.ico')
         self.game = Frame(self.root)
         self.right = Frame(self.root)
         self.table()
@@ -47,6 +48,8 @@ class App:
         self.checkbutton = Button(self.right, text="Check Sudoku", state=DISABLED, width=20, height=4)
         self.checkbutton.grid(row=2, column=0, pady=10)
 
+        self.randomgeneratorbutton = Button(self.right, text="Generate Random", width=20, height=4)
+        self.randomgeneratorbutton.grid(row=4, column=0, pady=10)
         # sudoku list viewer
 
         self.listsudoku = ttk.Frame(self.right)
@@ -54,7 +57,7 @@ class App:
         self.scrollbar.pack(side=RIGHT, fill=Y)
 
         self.listbox = Listbox(self.listsudoku, yscrollcommand=self.scrollbar.set)
-        for i in range(0, createsudoku.getlastid()+1):
+        for i in range(0, sudokucreator.getlastid() + 1):
             try:
                 self.listbox.insert(END, "Sudoku: " + str(i))
             except:
@@ -80,9 +83,10 @@ class App:
     def start(self, n):
         self.listsudoku.grid_remove()
         self.scrollbar.grid_remove()
+        self.randomgeneratorbutton.grid_remove()
         self.startbutton.config(state=DISABLED, text="The game Started!")
         self.checkbutton.config(state=ACTIVE, command=self.checksudoku)
-        self.sudoku = Game.SudokuGame(createsudoku.getsudokubyid(n))
+        self.sudoku = Game.SudokuGame(sudokucreator.getsudokubyid(n))
         self.starttime()
         self.canvas(final=True)
         self.visualizenumbers()
@@ -142,7 +146,7 @@ class App:
     def previsualizenumbers(self, n):
         self.canvas()
         font1 = Font(family="Times New Roman", size=20)
-        sudoku = createsudoku.getsudokubyid(n)
+        sudoku = sudokucreator.getsudokubyid(n)
         for i in range(0, 9):
             for j in range(0, 9):
                 if sudoku[i][j] != 0:
