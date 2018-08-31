@@ -5,18 +5,18 @@ class SudokuGame:
     def __init__(self, n):
         self.table = Sudoku.Sudoku()
         self.finish = False
+        # available position that can be modified
         self.gamenumbers = []
         self.initialize(n)
-        self.table.visualize()
 
     def visualize(self):
         self.table.visualize()
 
     def initialize(self, n):
-        self.table.board = n
+        self.table.copy(n)
         for i in range(0, 9):
             for j in range(0, 9):
-                if n[i][j] == 0:
+                if self.table.getboard()[i][j] == 0:
                     self.gamenumbers.append((j, i))
 
     def getfinish(self):

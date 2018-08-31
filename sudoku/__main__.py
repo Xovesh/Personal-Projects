@@ -81,7 +81,6 @@ class App:
     def start(self, n):
         self.listsudoku.grid_remove()
         self.scrollbar.grid_remove()
-        self.randomgeneratorbutton.grid_remove()
         self.startbutton.config(state=DISABLED, text="The game Started!")
         self.checkbutton.config(state=ACTIVE, command=self.checksudoku)
         self.sudoku = Game.SudokuGame(sudokucreator.getsudokubyid(n))
@@ -149,8 +148,6 @@ class App:
             for j in range(0, 9):
                 if sudoku[i][j] != 0:
                     ttk.Label(self.game, text=sudoku[i][j], font=font1).grid(row=i, column=j)
-                else:
-                    ttk.Label(self.game, font=font1).grid(row=i, column=j)
 
 
 a = App()

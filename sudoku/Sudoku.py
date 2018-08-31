@@ -1,9 +1,11 @@
 class Sudoku:
+
+    SQUARES = {1: ((0, 2), (0, 2)), 2: ((3, 5), (0, 2)), 3: ((6, 8), (0, 2)),
+               4: ((0, 2), (3, 5)), 5: ((3, 5), (3, 5)), 6: ((6, 8), (3, 5)),
+               7: ((0, 2), (6, 8)), 8: ((3, 5), (6, 8)), 9: ((6, 8), (6, 8))}
+
     def __init__(self):
         self.board = []
-        self.squares = {1: ((0, 2), (0, 2)), 2: ((3, 5), (0, 2)), 3: ((6, 8), (0, 2)),
-                        4: ((0, 2), (3, 5)), 5: ((3, 5), (3, 5)), 6: ((6, 8), (3, 5)),
-                        7: ((0, 2), (6, 8)), 8: ((3, 5), (6, 8)), 9: ((6, 8), (6, 8))}
         self.initialize()
 
     def visualize(self):
@@ -33,28 +35,31 @@ class Sudoku:
     def getsquare(self, x, y):
         if 0 <= x <= 2:
             if 0 <= y <= 2:
-                return self.squares[1]
+                return Sudoku.SQUARES[1]
             elif 2 <= y <= 5:
-                return self.squares[4]
+                return Sudoku.SQUARES[4]
             else:
-                return self.squares[7]
+                return Sudoku.SQUARES[7]
         elif 2 <= x <= 5:
             if 0 <= y <= 2:
-                return self.squares[2]
+                return Sudoku.SQUARES[2]
             elif 2 <= y <= 5:
-                return self.squares[5]
+                return Sudoku.SQUARES[5]
             else:
-                return self.squares[8]
+                return Sudoku.SQUARES[8]
         else:
             if 0 <= y <= 2:
-                return self.squares[3]
+                return Sudoku.SQUARES[3]
             elif 2 <= y <= 5:
-                return self.squares[6]
+                return Sudoku.SQUARES[6]
             else:
-                return self.squares[9]
+                return Sudoku.SQUARES[9]
 
     def deletexy(self, x, y):
         self.setxy(x, y, 0)
 
     def getboard(self):
         return self.board
+
+    def copy(self, n):
+        self.board = n

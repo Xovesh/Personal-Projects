@@ -34,6 +34,6 @@ __Sudoku__:
   
   I need an App to read them.
   
-  Uhm, Ads and to many permissions, dont like it.
+  Uhm, Ads and to many permissions, don't like it.
   
-  __Let's create Free ads PDF reader__
+  Let's create __Android PDF Reader__
