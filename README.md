@@ -1,3 +1,6 @@
+
+Everything developed in python 3.6
+
 # Finished projects
 
 __Pokedex__: Simple Pokedex with an Interactive GUI.
