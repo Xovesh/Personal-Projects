@@ -18,8 +18,6 @@ __Webpage__: Creating a webpage using DJango Framework.
 __Chess__: Chess game with GUI.
 ![Screenshot](githubpictures/chess1.PNG)
 
-# Working projects
-
 __Sudoku__: 
 - Sudoku game with GUI.
 ![Screenshot](githubpictures/sudoku3.PNG)
@@ -27,16 +25,3 @@ __Sudoku__:
 
 - Sudoku creator with GUI
 ![Screenshot](githubpictures/sudoku2.PNG)
-
-# Future projects
-
-- __HTML parser__
-- I like japanese light novels. 
-
-  I want to read them at university while waiting to start the lesson. 
-  
-  I need an App to read them.
-  
-  Uhm, Ads and to many permissions, don't like it.
-  
-  Let's create __Android PDF Reader__
