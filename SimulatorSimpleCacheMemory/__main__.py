@@ -12,3 +12,4 @@ while x != -1:
     a.checkcm(x, y)
     a.visualizecm()
     x = int(input("Mem. address (byte) (-1 to finish): > "))
+a.finalhitrate()

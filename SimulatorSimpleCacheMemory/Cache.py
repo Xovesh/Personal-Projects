@@ -7,11 +7,15 @@ class Cache:
         self.setq = int(8/setsize)
         self.cm = self.createcm()
 
+        # hit/access
+        self.totalaccess = 0
+        self.hit = 0
         # cycles
         self.tcm = 2
         self.tmm = 21
         self.tbuff = 1
         self.tbt = self.tmm + self.blocksize/self.wordsize-1 * self.tbuff
+        self.totaltime = 0
 
     def createcm(self):
         cm = []
@@ -32,10 +36,12 @@ class Cache:
 
     def checkcm(self, address, operation):
         tag, sets, block = self.interprateaddres(address)
+        self.totalaccess += 1
         find = False
         for i in self.cm[sets]:
             if i.tag == tag and i.busy != 0:
                 print("Cache Hit")
+                self.hit += 1
                 find = True
         if not find:
             print("Cache Miss")
@@ -47,17 +53,18 @@ class Cache:
         self.accesstime(find, repl)
 
     def accesstime(self, find, repl):
-        totaltime = 0
+        time = 0
         if find:
-            totaltime += self.tcm
+            time += self.tcm
             print("Access time: Cache Access {} Cycles".format(self.tcm))
         elif not find and repl:
-            totaltime += self.tcm + self.tbt + self.tbt
+            time += self.tcm + self.tbt + self.tbt
             print("Access time: Cache Access {} Cycles,  -- block transf. (MM>CM or CM>MM), {} cycles --repl. {} cycles".format(self.tcm, self.tbt, self.tbt))
         elif not find:
-            totaltime += self.tcm + self.tbt
+            time += self.tcm + self.tbt
             print("Access time: Cache Access {} Cycles,  -- block transf. (MM>CM or CM>MM), {} cycles".format(self.tcm, self.tbt))
-        print("T_Access: {} Cycles".format(totaltime))
+        print("T_Access: {} Cycles".format(time))
+        self.totaltime += time
 
     def write(self, hit, tag, sets, block):
         repl = False
@@ -140,6 +147,9 @@ class Cache:
             print("-" * len(header))
         print("Note: in repl. the biggest number is the oldest/least used")
 
+    def finalhitrate(self):
+        print("Ref: {} -- Hits: {} -- Hit rate, h = {}".format(self.totalaccess, self.hit, self.hit/self.totalaccess))
+        print("Total access time = {} cycles".format(self.totaltime))
 
 class Line:
     def __init__(self):
