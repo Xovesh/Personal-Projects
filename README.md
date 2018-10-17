@@ -27,7 +27,9 @@ __Sudoku__:
 ![Screenshot](githubpictures/sudoku2.PNG)
 
 __Cache Memory Simulator__:
+
 School project that i thought it will be interesting to have here.
 - 2 Replacement policies: LRU (Least Recently Used) and FIFO (First in First Out)
 - Write strategy: Write-Back
-- 3 types of corresponde: Fully Associative, Set Associative and Direct Mapped.
+- 3 types of corresponde: Fully Associative, Set Associative and Direct Mapped
+- No GUI implementation.
