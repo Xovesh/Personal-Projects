@@ -15,3 +15,8 @@ If you want to login you can use:
 Username: admin
 
 Password: a7b2d3w9
+
+Pictures
+
+![Screenshot](../githubpictures/webpokedex1.PNG)
+![Screenshot](../githubpictures/webpokedex2.PNG)

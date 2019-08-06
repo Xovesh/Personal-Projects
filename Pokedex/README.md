@@ -6,3 +6,7 @@ To run up the program run __main.py__ file
 
 Using the script PokedexDB you can download all the pictures and db automatically. It took me 15 minutes.
 
+Pictures:
+
+![Screenshot](../githubpictures/pokedex1.PNG)
+![Screenshot](../githubpictures/pokedex2.PNG)
